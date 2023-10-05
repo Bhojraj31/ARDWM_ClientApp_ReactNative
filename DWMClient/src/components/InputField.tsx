@@ -5,6 +5,7 @@ interface FieldProps extends TextInputProps {
     placeholder: string;
     validationRegex: RegExp;
     errorMessage: string; 
+    textAlign?: 'left' | 'center' | 'right';
 }
 
 const InputField: React.FC<FieldProps> = (props) => {
@@ -33,7 +34,7 @@ const InputField: React.FC<FieldProps> = (props) => {
                     paddingHorizontal: 10,
                     fontSize: 19,
                     marginVertical: 10,
-                    textAlign: 'center',
+                    textAlign: props.textAlign || 'center',
                 }}
                 placeholderTextColor="grey"
             />

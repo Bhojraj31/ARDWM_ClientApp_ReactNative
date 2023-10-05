@@ -39,6 +39,8 @@ const UserDetail = () => {
             }}
           />
         </View>
+
+        {/* For space */}
         <View style={{ flex: .5 }}>
         </View>
       </View>

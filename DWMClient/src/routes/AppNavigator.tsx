@@ -7,6 +7,7 @@ import UserDetail from '../screens/UserDetail';
 import CreatePin from '../screens/CreatePin';
 import EnterPin from '../screens/EnterPin';
 import CustomHeader from '../components/CustomHeader';
+import ForgetPin from '../screens/ForgetPin';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,15 @@ const AppNavigator = () => {
                     options={{
                         headerShown: false
                     }}
+                />
+                <Stack.Screen
+                    name='ForgetPin'
+                    component={ForgetPin}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="" />
+                        ),
+                    })}
                 />
             </Stack.Navigator>
         </NavigationContainer>

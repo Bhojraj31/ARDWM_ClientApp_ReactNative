@@ -2,8 +2,11 @@ import React, { useState, useRef } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
 import Btn from '../components/Btn';
 import { deepskyblue } from '../assets/constants/constants';
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const EnterPin: React.FC = () => {
+
+  const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   // UseState For set pins
   const [pin, setPin] = useState<string[]>(['', '', '', '']);
@@ -85,7 +88,7 @@ const EnterPin: React.FC = () => {
             textColor={deepskyblue}
             btnLabel="Forgot PIN?"
             Press={() => {
-              
+              navigation.navigate('ForgetPin')
             }}
           />
         </View>

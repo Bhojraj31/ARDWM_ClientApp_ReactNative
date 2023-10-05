@@ -3,4 +3,5 @@ type HomeStackParamsList = {
     UserDetail : object | undefined,
     CreatePin : object | undefined,
     EnterPin : object | undefined,
+    ForgetPin : object | undefined,
 }
