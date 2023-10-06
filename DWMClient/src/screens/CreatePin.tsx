@@ -1,48 +1,95 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import InputField from '../components/InputField'
-import Btn from '../components/Btn'
-import { deepskyblue } from '../assets/constants/constants'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import InputField from '../components/InputField';
+import Btn from '../components/Btn';
+import { deepskyblue } from '../assets/constants/constants';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useCreatePinMutation } from '../service/AuthService'
+
+// Define a type for the expected route params
+interface RouteParams {
+  firstName: string;
+  lastName: string;
+}
 
 const CreatePin = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
+  
+  const[CreatePinApiRequest , CreatePinApiResponse] = useCreatePinMutation();
+  
+  function _createPin () {
+    
+  }
+  const [pin, setPin] = useState('');
+  const [validationError, setValidationError] = useState('');
+
+  const route = useRoute();
+  const { firstName, lastName } = route.params as RouteParams;
+
+  const handlePinChange = (text: string) => {
+    // Only numbers allow
+    const validationRegex = /^[0-9]*$/; 
+
+    if (validationRegex.test(text) || text.length <= 4) {
+      setPin(text);
+      // Clear the validation error for field
+      setValidationError('')
+    } else {
+      setValidationError('Please enter a 4-digit PIN');
+    }
+  };
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#030f1a' }}>
+      <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
-      <View style={{ flex: .9, justifyContent: 'space-evenly', alignItems: 'center' }}>
-
-        {/* Tittle */}
-        <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-          <Text style={{ fontSize: 20, color: 'grey' }}>
-            Please create a 4-digit pin
-          </Text>
-          <Text style={{ fontSize: 15, color: 'grey' }}>
-            for quick access
-          </Text>
+        {/* user data */}
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>{`Hello, ${firstName} ${lastName}`}</Text>
         </View>
+
+        {/* title */}
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>Please create a 4-digit PIN</Text>
+          <Text style={{ fontSize: 15, color: 'grey' }}>for quick access</Text>
+        </View>
+
+
 
         {/* Fields */}
-        <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-          <InputField placeholder="Enter PIN" secureTextEntry={true} maxLength={4} keyboardType='numeric' validationRegex={/^[0-9]+$/} errorMessage="Only numbers are allowed" />
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <InputField
+            placeholder="Enter PIN"
+            secureTextEntry={true}
+            maxLength={4}
+            keyboardType='numeric'
+            errorMessage={validationError}
+            value={pin}
+            onChangeText={handlePinChange}
+          />
         </View>
 
-        <View >
+        {/* button */}
+        <View>
           <Btn
             textColor={deepskyblue}
             btnLabel="Next"
             Press={() => {
-              navigation.navigate('EnterPin')
+              if (pin.length === 4) {
+                navigation.navigate('EnterPin', { pin });
+              } else {
+                setValidationError('Please enter a 4-digit PIN');
+              }
             }}
           />
         </View>
-        <View style={{ flex: .7 }}>
-        </View>
+
+        {/* for space */}
+        <View style={{ flex: 0.7 }}></View>
+
       </View>
     </View>
-  )
+  );
 }
 
-export default CreatePin
-
-const styles = StyleSheet.create({})
+export default CreatePin;

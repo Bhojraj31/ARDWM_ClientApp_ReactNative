@@ -1,53 +1,108 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import InputField from '../components/InputField'
-import Btn from '../components/Btn'
-import { deepskyblue } from '../assets/constants/constants'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import InputField from '../components/InputField';
+import Btn from '../components/Btn';
+import { deepskyblue } from '../assets/constants/constants';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const UserDetail = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
+  // state for userData
+  const [userData, setUserData] = React.useState({
+    firstName: '',
+    lastName: '',
+  });
+
+  // state for validation
+  const [validationErrors, setValidationErrors] = React.useState({
+    firstName: '',
+    lastName: '',
+  });
+
+  const handleInputChange = (fieldName: string, text: string) => {
+    // Allow only alphabets and spaces
+    const validationRegex = /^[A-Za-z\s]+$/;
+
+    if (validationRegex.test(text) || text === '') {
+      setUserData((prevData) => ({
+        ...prevData,
+        [fieldName]: text,
+      }));
+
+      // Clear the validation error for the current field
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: '',
+      }));
+    } else {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: 'Numbers are not allowed',
+      }));
+    }
+  };
+
+  const handleContinue = () => {
+    if (userData.firstName && userData.lastName) {
+      navigation.navigate('CreatePin', userData);
+      // console.log(userData);
+    } else {
+      // Set validation errors for any missing fields
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        // fieldName : userData ? '' : 'Please fill required'
+        firstName: userData.firstName ? '' : 'FName is required',
+        lastName: userData.lastName ? '' : 'LName is required',
+      }));
+    }
+  };
+
   return (
+    // parent View 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#030f1a' }}>
 
-      <View style={{ flex: .9, justifyContent: 'space-evenly', alignItems: 'center' }}>
+      {/* Content */}
+      <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
-        {/* Tittle */}
-        <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-          <Text style={{ fontSize: 20, color: 'grey' }}>
-            Do tell us a little
-          </Text>
-          <Text style={{ fontSize: 20, color: 'grey' }}>
-            about yourself
-          </Text>
+        {/* tittle */}
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>Do tell us a little</Text>
+          <Text style={{ fontSize: 20, color: 'grey' }}>about yourself</Text>
         </View>
 
-        {/* Fields */}
+        {/* Input fields */}
         <View>
-          <InputField placeholder="First Name" validationRegex={/^[A-Za-z]+$/} errorMessage="Only alphabets are allowed"/>
-          <InputField placeholder="Last Name" validationRegex={/^[A-Za-z]+$/} errorMessage="Only alphabets are allowed"/>
-        </View>
-
-        {/* Button */}
-        <View >
-          <Btn
-            textColor={deepskyblue}
-            btnLabel="Continue"
-            Press={() => {
-              navigation.navigate('CreatePin')
-            }}
+          <InputField
+            placeholder="First Name"
+            textAlign='left'
+            errorMessage={validationErrors.firstName}
+            value={userData.firstName}
+            onChangeText={(text) => handleInputChange('firstName', text)}
+          />
+          <InputField
+            placeholder="Last Name"
+            textAlign='left'
+            errorMessage={validationErrors.lastName}
+            value={userData.lastName}
+            onChangeText={(text) => handleInputChange('lastName', text)}
           />
         </View>
 
-        {/* For space */}
-        <View style={{ flex: .5 }}>
+        {/* Continue Button */}
+        <View>
+          <Btn
+            textColor={deepskyblue}
+            btnLabel="Continue"
+            Press={handleContinue}
+          />
         </View>
+
+        {/* For Space */}
+        <View style={{ flex: 0.5 }}></View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default UserDetail
-
-const styles = StyleSheet.create({})
+export default UserDetail;

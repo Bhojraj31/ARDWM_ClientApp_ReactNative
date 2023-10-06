@@ -1,34 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, TextInputProps, Text } from 'react-native';
 
 interface FieldProps extends TextInputProps {
     placeholder: string;
-    validationRegex: RegExp;
-    errorMessage: string; 
+    errorMessage?: string; // Allow errorMessage to be optional
     textAlign?: 'left' | 'center' | 'right';
 }
 
 const InputField: React.FC<FieldProps> = (props) => {
-    const [inputValue, setInputValue] = useState<string>('');
-    const [errorMessage, setErrorMessage] = useState<string>('');
-
-    const handleInputChange = (text: string) => {
-        const { validationRegex } = props;
-
-        if (validationRegex.test(text) || text === '') {
-            setInputValue(text);
-            setErrorMessage('');
-        } else {
-            setErrorMessage(props.errorMessage);
-        }
-    };
-
     return (
         <React.Fragment>
             <TextInput
                 {...props}
-                value={inputValue}
-                onChangeText={handleInputChange}
                 style={{
                     color: '#D3D3D3',
                     paddingHorizontal: 10,
@@ -38,7 +21,7 @@ const InputField: React.FC<FieldProps> = (props) => {
                 }}
                 placeholderTextColor="grey"
             />
-            {errorMessage !== '' && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
+            {props.errorMessage && <Text style={{ color: 'red' }}>{props.errorMessage}</Text>}
         </React.Fragment>
     );
 };
