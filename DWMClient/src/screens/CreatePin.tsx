@@ -4,7 +4,7 @@ import InputField from '../components/InputField';
 import Btn from '../components/Btn';
 import { deepskyblue } from '../assets/constants/constants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useCreatePinMutation } from '../service/AuthService'
+import { useCreatePinMutation } from '../service/AuthService';
 
 // Define a type for the expected route params
 interface RouteParams {
@@ -14,28 +14,25 @@ interface RouteParams {
 
 const CreatePin = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
-  
-  const[CreatePinApiRequest , CreatePinApiResponse] = useCreatePinMutation();
-  
-  function _createPin () {
-    
-  }
+
   const [pin, setPin] = useState('');
   const [validationError, setValidationError] = useState('');
+
+  const [createPinApiRequest, createPinApiResponse] = useCreatePinMutation()
 
   const route = useRoute();
   const { firstName, lastName } = route.params as RouteParams;
 
   const handlePinChange = (text: string) => {
-    // Only numbers allow
-    const validationRegex = /^[0-9]*$/; 
-
-    if (validationRegex.test(text) || text.length <= 4) {
+    // Only allow 4 mumbers 
+    const validationRegex = /^[0-9]*$/;
+    // check input value number and lenght is 4
+    if (validationRegex.test(text) && text.length <= 4) {
       setPin(text);
-      // Clear the validation error for field
-      setValidationError('')
+      // Clear the validation error for the field
+      setValidationError('');
     } else {
-      setValidationError('Please enter a 4-digit PIN');
+      setValidationError('Please enter a valid 4-digit PIN');
     }
   };
 
@@ -53,8 +50,6 @@ const CreatePin = () => {
           <Text style={{ fontSize: 20, color: 'grey' }}>Please create a 4-digit PIN</Text>
           <Text style={{ fontSize: 15, color: 'grey' }}>for quick access</Text>
         </View>
-
-
 
         {/* Fields */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -75,10 +70,12 @@ const CreatePin = () => {
             textColor={deepskyblue}
             btnLabel="Next"
             Press={() => {
-              if (pin.length === 4) {
+              if (validationError === '' && pin.length === 4) {
                 navigation.navigate('EnterPin', { pin });
+                createPinApiRequest({ pin: pin })
+                console.log(createPinApiResponse);
               } else {
-                setValidationError('Please enter a 4-digit PIN');
+                setValidationError('Please enter a valid 4-digit PIN');
               }
             }}
           />

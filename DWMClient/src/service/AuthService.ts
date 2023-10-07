@@ -12,15 +12,15 @@ export const authService = authApi.injectEndpoints({
                 url: '/auth/login',
             }),
         }),
-        createPin: build.mutation<CreatePinRequest, CreatePinResponse>({
+        createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
             query: (payload) => ({
                 body: payload,
                 method: 'POST',
                 url: '/auth/createPin',
             }),
-        })
+        }),
     }),
     overrideExisting: false,
-})
+});
 
 export const { useLoginMutation, useCreatePinMutation } = authService
