@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import InputField from '../components/InputField';
 import Btn from '../components/Btn';
-import { deepskyblue } from '../assets/constants/constants';
+import { background, deepskyblue } from '../assets/constants/constants';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const UserDetail = () => {
@@ -38,7 +38,7 @@ const UserDetail = () => {
     } else {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
-        [fieldName]: 'Numbers are not allowed',
+        [fieldName]: 'Enter ',
       }));
     }
   };
@@ -60,7 +60,7 @@ const UserDetail = () => {
 
   return (
     // parent View 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#030f1a' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
 
       {/* Content */}
       <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
@@ -75,14 +75,14 @@ const UserDetail = () => {
         <View>
           <InputField
             placeholder="First Name"
-            textAlign='left'
+            textAlign='center'
             errorMessage={validationErrors.firstName}
             value={userData.firstName}
             onChangeText={(text) => handleInputChange('firstName', text)}
           />
           <InputField
             placeholder="Last Name"
-            textAlign='left'
+            textAlign='center'
             errorMessage={validationErrors.lastName}
             value={userData.lastName}
             onChangeText={(text) => handleInputChange('lastName', text)}

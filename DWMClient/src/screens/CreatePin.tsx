@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import InputField from '../components/InputField';
 import Btn from '../components/Btn';
-import { deepskyblue } from '../assets/constants/constants';
+import { background, deepskyblue } from '../assets/constants/constants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../service/AuthService';
 
@@ -37,7 +37,7 @@ const CreatePin = () => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#030f1a' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
       <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
         {/* user data */}
@@ -73,7 +73,7 @@ const CreatePin = () => {
               if (validationError === '' && pin.length === 4) {
                 navigation.navigate('EnterPin', { pin });
                 createPinApiRequest({ pin: pin })
-                console.log(createPinApiResponse);
+                console.log(createPinApiResponse.originalArgs);
               } else {
                 setValidationError('Please enter a valid 4-digit PIN');
               }

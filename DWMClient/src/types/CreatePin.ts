@@ -5,5 +5,4 @@ export interface CreatePinRequest {
 export interface CreatePinResponse {
     success: boolean; 
     message: string; 
-    
 }

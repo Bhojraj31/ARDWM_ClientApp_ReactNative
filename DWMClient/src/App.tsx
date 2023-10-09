@@ -1,17 +1,18 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import AppNavigator from './routes/AppNavigator'
 import { Provider } from 'react-redux';
 import { store } from './store'
 import Test from './screens/Test';
 
-const App = () => {
 
+const App = () => {
   
+
   return (
     <Provider store={store}>
-      <AppNavigator />
-      {/* <Test/> */}
+      {/* <AppNavigator /> */}
+      <Test/>
     </Provider>
   )
 }

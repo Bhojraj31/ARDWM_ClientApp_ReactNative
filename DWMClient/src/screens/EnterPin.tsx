@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
 import Btn from '../components/Btn';
-import { deepskyblue } from '../assets/constants/constants';
+import { background, deepskyblue } from '../assets/constants/constants';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const EnterPin: React.FC = () => {
@@ -46,7 +46,7 @@ const EnterPin: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#030f1a' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
       {/* for space */}
       <View style={{ flex: .30 }}></View>
 

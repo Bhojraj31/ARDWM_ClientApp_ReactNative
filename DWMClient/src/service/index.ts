@@ -4,7 +4,7 @@ import { store } from '../store'
 export const authApi = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.escuelajs.co/api/v1",
+        baseUrl: "https://dwm-stage.anandrathiwealth.in/WMService/api/v15",
         prepareHeaders: async (headers) => {
             const { accessToken } = store.getState().auth
             if (accessToken) {

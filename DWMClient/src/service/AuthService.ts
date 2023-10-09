@@ -1,6 +1,5 @@
 import { authApi } from './index'
 import { LoginRequest, LoginResponse } from '../types/Login'
-import { RegisterRequest, RegisterResponse } from '../types/Register'
 import { CreatePinRequest, CreatePinResponse } from '../types/CreatePin'
 
 export const authService = authApi.injectEndpoints({
