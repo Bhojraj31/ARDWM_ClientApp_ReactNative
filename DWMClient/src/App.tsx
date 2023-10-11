@@ -8,11 +8,11 @@ import Test from './screens/Test';
 
 const App = () => {
   
-
   return (
     <Provider store={store}>
-      {/* <AppNavigator /> */}
-      <Test/>
+      <AppNavigator />
+      
+      {/* <Test/> */}
     </Provider>
   )
 }

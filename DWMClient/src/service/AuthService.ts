@@ -15,7 +15,7 @@ export const authService = authApi.injectEndpoints({
             query: (payload) => ({
                 body: payload,
                 method: 'POST',
-                url: '/auth/createPin',
+                url: '/addLeadCommon',
             }),
         }),
     }),

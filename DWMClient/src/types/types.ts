@@ -4,4 +4,5 @@ type HomeStackParamsList = {
     CreatePin : object | undefined,
     EnterPin : object | undefined,
     ForgetPin : object | undefined,
+    Dashboard : object | undefined,
 }

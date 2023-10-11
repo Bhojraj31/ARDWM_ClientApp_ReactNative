@@ -8,6 +8,7 @@ import CreatePin from '../screens/CreatePin';
 import EnterPin from '../screens/EnterPin';
 import CustomHeader from '../components/CustomHeader';
 import ForgetPin from '../screens/ForgetPin';
+import Dashboard from '../screens/Dashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,13 @@ const AppNavigator = () => {
                 <Stack.Screen
                     name='EnterPin'
                     component={EnterPin}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name='Dashboard'
+                    component={Dashboard}
                     options={{
                         headerShown: false
                     }}

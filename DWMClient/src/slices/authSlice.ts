@@ -13,6 +13,8 @@ const initialState: AuthState = {
     refreshToken: '', 
 };
 
+
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -21,12 +23,11 @@ export const authSlice = createSlice({
             state.user = action.payload;
         },
         setToken: (state, action: PayloadAction<string>) => {
-            state.accessToken = action.payload; // Set the accessToken from the action payload
+            state.accessToken = action.payload; 
         },
         logout: () => initialState,
     },
 });
 
-// Action creators are generated for each case reducer function
 export const { setUser, setToken } = authSlice.actions;
 export default authSlice.reducer;

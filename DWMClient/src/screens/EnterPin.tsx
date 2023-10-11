@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
 import Btn from '../components/Btn';
 import { background, deepskyblue } from '../assets/constants/constants';
@@ -42,6 +42,12 @@ const EnterPin: React.FC = () => {
       if (index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1]?.focus();
       }
+
+      // Check if all pins are entered (4 digits)
+      if (index === 3 && newPin.every((digit) => digit !== '')) {
+        // Navigate to the Dashboard screen
+        navigation.navigate('Dashboard');
+      }
     }
   };
 
@@ -58,7 +64,7 @@ const EnterPin: React.FC = () => {
         <View style={{ justifyContent: 'space-evenly', alignItems: 'center' }}>
 
           {/* Input Box */}
-          <View style={{ flexDirection: 'row', marginBottom:10 }}>
+          <View style={{ flexDirection: 'row', marginBottom: 10 }}>
             {pin.map((digit, index) => (
               <TextInput
                 key={index}
@@ -77,12 +83,12 @@ const EnterPin: React.FC = () => {
               />
             ))}
           </View>
-          
+
           {/* Text */}
-          <Text style={{ fontSize: 20, color: 'grey', marginBottom:10 }}>
+          <Text style={{ fontSize: 20, color: 'grey', marginBottom: 10 }}>
             Enter 4-Digit PIN
           </Text>
-          
+
           {/* Btn */}
           <Btn
             textColor={deepskyblue}
@@ -92,8 +98,6 @@ const EnterPin: React.FC = () => {
             }}
           />
         </View>
-
-
       </View>
     </View>
   );

@@ -7,9 +7,7 @@ import { background, deepskyblue } from '../assets/constants/constants'
 const ForgetPin = () => {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
-
             <View style={{ flex: .8, justifyContent: 'space-evenly', alignItems: 'center' }}>
-
                 {/* Tittle */}
                 <View style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <Text style={{ fontSize: 20, color: 'grey' }}>
@@ -19,13 +17,12 @@ const ForgetPin = () => {
                         mobile number
                     </Text>
                 </View>
-
                 {/* Fields */}
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
                     </View>
-
+                    
                     <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 20 }}></View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -36,7 +33,6 @@ const ForgetPin = () => {
                 <View>
                     <Btn
                         textColor={deepskyblue}
-                        
                         btnLabel="Next"
                         Press={() => { }}
                     />

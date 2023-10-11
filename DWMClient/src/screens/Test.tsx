@@ -25,7 +25,7 @@ const Test = () => {
             </Text>
             {
                 accessToken && (
-                    <Text style={{ color: 'grey', fontSize: 14 }}>
+                    <Text style={{ color: 'grey', fontSize: 18 }}>
                         Access Token: {accessToken}
                     </Text>
                 )

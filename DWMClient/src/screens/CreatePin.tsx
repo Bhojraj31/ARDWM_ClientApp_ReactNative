@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ToastAndroid } from 'react-native';
 import InputField from '../components/InputField';
 import Btn from '../components/Btn';
 import { background, deepskyblue } from '../assets/constants/constants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../service/AuthService';
-
+import Toast from 'react-native-toast-message'
 // Define a type for the expected route params
 interface RouteParams {
   firstName: string;
@@ -18,19 +18,85 @@ const CreatePin = () => {
   const [pin, setPin] = useState('');
   const [validationError, setValidationError] = useState('');
 
-  const [createPinApiRequest, createPinApiResponse] = useCreatePinMutation()
+  const [createPinApiRequest, createPinApiResponse] = useCreatePinMutation();
 
   const route = useRoute();
   const { firstName, lastName } = route.params as RouteParams;
 
   const handlePinChange = (text: string) => {
-    // Only allow 4 mumbers 
+    // Only allow 4 numbers
     const validationRegex = /^[0-9]*$/;
-    // check input value number and lenght is 4
+    // check input value number and length is 4
     if (validationRegex.test(text) && text.length <= 4) {
       setPin(text);
       // Clear the validation error for the field
       setValidationError('');
+    } else {
+      setValidationError('Please enter a valid 4-digit PIN');
+    }
+  };
+
+  const handleNextButtonPress = async () => {
+    if (validationError === '' && pin.length === 4) {
+      try {
+        // Define the payload for creating the PIN and Save the user details
+        const createPinPayload = {
+          buId: '',
+          contactPartyId: '',
+          partyId: '',
+          firstName,
+          lastName,
+          emailId: '',
+          city: '',
+          address1: '',
+          address2: '',
+          address3: '',
+          Country: '',
+          State: '',
+          PinCode: '',
+          gender: '',
+          expinyr: '',
+          expinmon: '',
+          organization: '',
+          designation: '',
+          mobileNo: '',
+          lastModifiedBy: '',
+          lastModifiedDateTime: '',
+          sourceSystemobject: '',
+          sourceSystemId: '',
+          macId: '',
+          campaign: '',
+          flag: '',
+          UTM1: '',
+          UTM2: '',
+          UTM3: '',
+          currentSavings: '',
+          UtmContent: '',
+          UtmTerm: '',
+          longitude: '',
+          latitude: '',
+          pin,
+          arn: '',
+          countryCodeId: '',
+          userId: '',
+        };
+        // Make the API request to create the PIN
+        const response = await createPinApiRequest(createPinPayload).unwrap();
+        // Check if the response has a reasonCode
+        if (response.reasonCode) {
+          // Display the reasonCode in a toast
+          ToastAndroid.showWithGravityAndOffset(response.reasonCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 0);
+        }
+        // Navigate to the next screen
+        navigation.navigate('EnterPin', { pin });
+        console.log(createPinPayload.firstName);
+        console.log(createPinPayload.lastName);
+        console.log(createPinPayload.pin);
+        console.log(response);
+      } catch (error) {
+        // Handle any errors here
+        console.error('Error creating PIN:', error);
+      }
     } else {
       setValidationError('Please enter a valid 4-digit PIN');
     }
@@ -41,9 +107,9 @@ const CreatePin = () => {
       <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
         {/* user data */}
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 20, color: 'grey' }}>{`Hello, ${firstName} ${lastName}`}</Text>
-        </View>
+        </View> */}
 
         {/* title */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -52,6 +118,7 @@ const CreatePin = () => {
         </View>
 
         {/* Fields */}
+
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <InputField
             placeholder="Enter PIN"
@@ -61,29 +128,21 @@ const CreatePin = () => {
             errorMessage={validationError}
             value={pin}
             onChangeText={handlePinChange}
+            onSubmitEditing={handleNextButtonPress}
           />
         </View>
 
         {/* button */}
-        <View>
+        {/* <View>
           <Btn
             textColor={deepskyblue}
             btnLabel="Next"
-            Press={() => {
-              if (validationError === '' && pin.length === 4) {
-                navigation.navigate('EnterPin', { pin });
-                createPinApiRequest({ pin: pin })
-                console.log(createPinApiResponse.originalArgs);
-              } else {
-                setValidationError('Please enter a valid 4-digit PIN');
-              }
-            }}
+            Press={handleNextButtonPress}
           />
-        </View>
+        </View> */}
 
         {/* for space */}
         <View style={{ flex: 0.7 }}></View>
-
       </View>
     </View>
   );
