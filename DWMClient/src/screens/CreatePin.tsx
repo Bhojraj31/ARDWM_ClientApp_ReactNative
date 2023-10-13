@@ -1,11 +1,25 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- Create Pin
+* @Type:- Functional Component
+* @Role:- For showing Create Pin
+* @Sprint:- Sprint 1.0 -- Jira ID DRN-7
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  06-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
 import React, { useState } from 'react';
 import { View, Text, ToastAndroid } from 'react-native';
 import InputField from '../components/InputField';
 import Btn from '../components/Btn';
-import { background, deepskyblue } from '../assets/constants/constants';
+import { background, deepskyblue } from '../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
-import { useCreatePinMutation } from '../service/AuthService';
-import Toast from 'react-native-toast-message'
+import { useCreatePinMutation } from '../service/AddLeadCommonService';
+import { apiType, apiTypes } from '../assets/constants/ApiConstants';
 // Define a type for the expected route params
 interface RouteParams {
   firstName: string;
@@ -19,6 +33,7 @@ const CreatePin = () => {
   const [validationError, setValidationError] = useState('');
 
   const [createPinApiRequest, createPinApiResponse] = useCreatePinMutation();
+  
 
   const route = useRoute();
   const { firstName, lastName } = route.params as RouteParams;
@@ -80,8 +95,11 @@ const CreatePin = () => {
           countryCodeId: '',
           userId: '',
         };
+        
         // Make the API request to create the PIN
+        apiType.value = apiTypes.post;
         const response = await createPinApiRequest(createPinPayload).unwrap();
+        
         // Check if the response has a reasonCode
         if (response.reasonCode) {
           // Display the reasonCode in a toast
@@ -106,19 +124,12 @@ const CreatePin = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
       <View style={{ flex: 0.9, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
-        {/* user data */}
-        {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 20, color: 'grey' }}>{`Hello, ${firstName} ${lastName}`}</Text>
-        </View> */}
-
         {/* title */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 20, color: 'grey' }}>Please create a 4-digit PIN</Text>
           <Text style={{ fontSize: 15, color: 'grey' }}>for quick access</Text>
         </View>
-
         {/* Fields */}
-
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <InputField
             placeholder="Enter PIN"
@@ -131,15 +142,6 @@ const CreatePin = () => {
             onSubmitEditing={handleNextButtonPress}
           />
         </View>
-
-        {/* button */}
-        {/* <View>
-          <Btn
-            textColor={deepskyblue}
-            btnLabel="Next"
-            Press={handleNextButtonPress}
-          />
-        </View> */}
 
         {/* for space */}
         <View style={{ flex: 0.7 }}></View>

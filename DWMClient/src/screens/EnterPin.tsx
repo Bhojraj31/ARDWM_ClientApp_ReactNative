@@ -1,7 +1,21 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- Enter Pin
+* @Type:- Functional Component
+* @Role:- for showing Enter Pin
+* @Sprint:- Sprint 1.0 -- Jira ID DRN-9
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  09-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
 import Btn from '../components/Btn';
-import { background, deepskyblue } from '../assets/constants/constants';
+import { background, deepskyblue } from '../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const EnterPin: React.FC = () => {

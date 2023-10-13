@@ -1,15 +1,32 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- store
+* @Type:- Functional Component
+* @Role:- Store for App
+* @Sprint:- Sprint 1.0 -- Jira 
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  05-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
+
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './slices/authSlice'
+import addLeadCommonReducer from './slices/AddLeadCommonSlice'
+import tokenReducer from './slices/TokenSlice'
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
-import { authApi } from './service/index';
+import { api } from './service/index';
 
 export const store = configureStore({
     reducer: { 
-        auth: authReducer,
-        [authApi.reducerPath]: authApi.reducer,
+        addLeadCommon: addLeadCommonReducer,
+        token: tokenReducer,
+        [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({}).concat([authApi.middleware]),
+        getDefaultMiddleware({}).concat([api.middleware]),
 })
 
 export type RootState = ReturnType<typeof store.getState>

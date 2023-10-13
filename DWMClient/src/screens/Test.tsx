@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useEffect } from 'react'
 // import { useGetTokenQuery } from '../service/tokenService/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from '../slices/authSlice';
+import { setToken } from '../slices/AddLeadCommonSlice';
 import { RootState } from '../store';
 import { useGetTokenQuery } from '../service/TokenService';
 

@@ -1,3 +1,17 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- App Navigation
+* @Type:- Functional Component
+* @Role:- Stack Navigation 
+* @Sprint:- Sprint 1.0 -- Jira ID DRN-6
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  04-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

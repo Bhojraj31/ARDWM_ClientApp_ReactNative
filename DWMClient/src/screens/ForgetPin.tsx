@@ -1,8 +1,22 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- Forget Pin
+* @Type:- Functional Component
+* @Role:- for showing Forget Pin
+* @Sprint:- Sprint 1.0 -- Jira ID DRN-10
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  12-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import InputField from '../components/InputField'
 import Btn from '../components/Btn'
-import { background, deepskyblue } from '../assets/constants/constants'
+import { background, deepskyblue } from '../assets/constants/ColorConstants'
 
 const ForgetPin = () => {
     return (

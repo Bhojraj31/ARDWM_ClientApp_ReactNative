@@ -1,13 +1,28 @@
-import { authApi } from './index'
-import { TokenRequest, TokenResponse } from '../types/Token';
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- tokenService
+* @Type:- Functional Component
+* @Role:- Added endPoint for getToken
+* @Sprint:- Sprint 1.0 -- Jira 
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  06-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
 
-export const tokenService = authApi.injectEndpoints({
+import { api } from './index'
+import { TokenRequest, TokenResponse } from '../types/Token';
+import { endpoints } from '../assets/constants/ApiConstants';
+
+export const tokenService = api.injectEndpoints({
     endpoints: (build) => ({
         getToken: build.query<TokenResponse, TokenRequest>({
-            query: () => '/security/getToken/31009', 
+            query: () => endpoints.token,
         })
     }),
     overrideExisting: false,
 });
 
-export const { useGetTokenQuery } = tokenService
+export const { useLazyGetTokenQuery } = tokenService

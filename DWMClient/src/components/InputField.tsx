@@ -1,3 +1,17 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+* @param - NA
+* @return -- NA
+* @Name:- Custom InputField
+* @Type:- Functional Component
+* @Role:- Reuable Custom InputField
+* @Sprint:- Sprint 1.0 
+* @Created by:- Bhojraj Singh Shekhawat
+* @Created on:-  04-10-2023
+* @Last Modified by:- No
+* @Last modified on:- No
+*/
+
 import React from 'react';
 import { TextInput, TextInputProps, Text } from 'react-native';
 

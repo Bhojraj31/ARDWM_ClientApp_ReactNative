@@ -2,23 +2,33 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from '../slices/authSlice';
+import { setToken } from '../slices/TokenSlice';
 import { RootState } from '../store';
-import { useGetTokenQuery } from '../service/TokenService';
+import { useLazyGetTokenQuery } from '../service/TokenService';
+import { apiType, apiTypes } from '../assets/constants/ApiConstants';
+
 function Home() {
     const navigation = useNavigation<NavigationProp<HomeStackParamsList>>()
-    const { data: tokenData, error, isLoading } = useGetTokenQuery({});
+    const [getTokenApiRequest, getTokenApiResponse] = useLazyGetTokenQuery();
     const dispatch = useDispatch();
-    const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+    const accessToken = useSelector((state: RootState) => state.token.responseObject);
 
-    console.log(accessToken);
+    // const apiType = apiTypes.token
+    // console.log(accessToken);
     
     useEffect(() => {
-        if (!isLoading && !error && tokenData) {
-            const accessToken = tokenData.responseObject;
-            dispatch(setToken(accessToken));
-        }
-    }, [tokenData, error, isLoading]);
+        apiType.value = apiTypes.token
+        getTokenApiRequest({});
+    }, []);
+
+    useEffect(() => {
+        if (getTokenApiResponse.isSuccess) {
+            console.log('Token API Response:', getTokenApiResponse);
+            const gatedToken = getTokenApiResponse.data.responseObject;
+            dispatch(setToken(gatedToken));
+            console.log('Token API Response:', getTokenApiResponse);
+        } 
+    }, [getTokenApiResponse]);
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
