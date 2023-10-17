@@ -13,12 +13,33 @@
 */
 
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React,{useState} from 'react'
 import InputField from '../components/InputField'
 import Btn from '../components/Btn'
 import { background, deepskyblue } from '../assets/constants/ColorConstants'
 
 const ForgetPin = () => {
+    const [mobileNumber, setMobileNumber] = useState('');
+    const [validationError, setValidationError] = useState('');
+
+    const handleMobileNumberChange = (text:string) => {
+        const validationRegex = /^[0-9]*$/;
+        if (validationRegex.test(text) && text.length === 10) {
+            setMobileNumber(text);
+            setValidationError('');
+        } else {
+            setValidationError('Please enter a valid 10-digit mobile number');
+        }
+    };
+
+    const handleSubmit = () => {
+        if (validationError === '') {
+            // You can use the valid mobileNumber for further processing, e.g., making an API call.
+            console.log('Valid Mobile Number: ' + mobileNumber);
+        } else {
+            setValidationError('Please enter a valid 10-digit mobile number');
+        }
+    };
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
             <View style={{ flex: .8, justifyContent: 'space-evenly', alignItems: 'center' }}>
@@ -36,21 +57,23 @@ const ForgetPin = () => {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
                     </View>
-                    
+
                     <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 20 }}></View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <InputField placeholder="Mobile Number" secureTextEntry={true} maxLength={10} keyboardType='numeric' textAlign="left" errorMessage="Only numbers are allowed" />
+                        <InputField
+                            placeholder="Mobile Number"
+                            secureTextEntry={true}
+                            maxLength={10}
+                            keyboardType='numeric'
+                            textAlign="left"
+                            errorMessage={validationError}
+                            value={mobileNumber}
+                            onChangeText={handleMobileNumberChange}
+                        />
                     </View>
                 </View>
 
-                <View>
-                    <Btn
-                        textColor={deepskyblue}
-                        btnLabel="Next"
-                        Press={() => { }}
-                    />
-                </View>
                 <View style={{ flex: .7 }}>
                 </View>
             </View>

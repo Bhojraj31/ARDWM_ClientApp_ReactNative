@@ -26,6 +26,47 @@ interface RouteParams {
   lastName: string;
 }
 
+const tempPayload = {
+  "buId": "",
+  "contactPartyId": "1655452",
+  "partyId": "",
+  "firstName": "Ajeet",
+  "lastName": "Singh",
+  "emailId": "",
+  "city": "",
+  "address1": "",
+  "address2": "",
+  "address3": "",
+  "Country": "",
+  "State": "",
+  "PinCode": "",
+  "gender": "",
+  "expinyr": "",
+  "expinmon": "",
+  "organization": "",
+  "designation": "",
+  "mobileNo": "1000025528",
+  "lastModifiedBy": "",
+  "lastModifiedDateTime": "",
+  "sourceSystemobject": "634004",
+  "sourceSystemId": "",
+  "macId": "",
+  "campaign": "",
+  "flag": "",
+  "UTM1": "",
+  "UTM2": "",
+  "UTM3": "",
+  "currentSavings": "",
+  "UtmContent": "",
+  "UtmTerm": "",
+  "longitude": "",
+  "latitude": "",
+  "pin": "1234",
+  "arn": "",
+  "countryCodeId": "645095",
+  "userId": "2445079"
+}
+
 const CreatePin = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
@@ -98,7 +139,7 @@ const CreatePin = () => {
         
         // Make the API request to create the PIN
         apiType.value = apiTypes.post;
-        const response = await createPinApiRequest(createPinPayload).unwrap();
+        const response = await createPinApiRequest(tempPayload).unwrap();
         
         // Check if the response has a reasonCode
         if (response.reasonCode) {

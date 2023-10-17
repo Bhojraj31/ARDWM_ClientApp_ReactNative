@@ -39,8 +39,6 @@ const initialState: AddLeadCommonState = {
     user: null,
 };
 
-console.log('token',initialState.token);
-
 export const addLeadCommon = createSlice({
     name: 'addLeadCommon',
     initialState,

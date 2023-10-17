@@ -15,14 +15,31 @@
 import { api } from './index'
 import { TokenRequest, TokenResponse } from '../types/Token';
 import { endpoints } from '../assets/constants/ApiConstants';
+import { CreatePinRequest, CreatePinResponse } from '../types/CreatePin';
 
 export const tokenService = api.injectEndpoints({
     endpoints: (build) => ({
-        getToken: build.query<TokenResponse, TokenRequest>({
-            query: () => endpoints.token,
-        })
+        getToken: build.mutation<TokenResponse, TokenRequest>({
+            query: () => ({
+                url: endpoints.token,
+                method: 'GET',
+                headers: {
+                    'appversion': '7.3'
+                }
+            }),
+        }),
+        createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
+            query: (payload) => ({
+                body: payload,
+                method: 'POST',
+                url: '/addLeadCommon',
+                headers: {
+                    "buId": "27808",
+                    "Content-Type": "application/json",
+                }
+            }),
+        }),
     }),
-    overrideExisting: false,
 });
 
-export const { useLazyGetTokenQuery } = tokenService
+export const { useGetTokenMutation } = tokenService

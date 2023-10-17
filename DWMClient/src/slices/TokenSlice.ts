@@ -19,7 +19,8 @@ export interface TokenState {
     isSuccess : boolean,
     isLoading : boolean, 
     status: string,
-    responseObject: string
+    responseObject: string,
+    token: string
 }
 
 export const initialState: TokenState = {
@@ -27,7 +28,8 @@ export const initialState: TokenState = {
     isSuccess : false,
     isLoading : false, 
     status: '',
-    responseObject: ''
+    responseObject: '',
+    token:''
 };
 
 
@@ -36,9 +38,8 @@ export const token = createSlice({
     initialState,
     reducers: {
         setToken: (state, action: PayloadAction<string>) => {
-            state.responseObject = action.payload;
-            console.log('Token aaya', state.responseObject);
-            
+            state.token = action.payload;
+            console.log('Token aaya', action.payload);
         },
         logout: () => initialState,
     },
