@@ -23,6 +23,7 @@ import EnterPin from '../screens/EnterPin';
 import CustomHeader from '../components/CustomHeader';
 import ForgetPin from '../screens/ForgetPin';
 import Dashboard from '../screens/Dashboard';
+import SplashScreen from '../screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,9 +31,16 @@ const AppNavigator = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen
+                {/* <Stack.Screen
                     name='Home'
                     component={Home}
+                    options={{
+                        headerShown: false
+                    }}
+                /> */}
+                <Stack.Screen
+                    name='SplashScreen'
+                    component={SplashScreen}
                     options={{
                         headerShown: false
                     }}

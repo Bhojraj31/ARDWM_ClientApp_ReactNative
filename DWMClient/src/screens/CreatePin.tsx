@@ -139,7 +139,7 @@ const CreatePin = () => {
         
         // Make the API request to create the PIN
         apiType.value = apiTypes.post;
-        const response = await createPinApiRequest(tempPayload).unwrap();
+        const response = await createPinApiRequest(createPinPayload).unwrap();
         
         // Check if the response has a reasonCode
         if (response.reasonCode) {
@@ -148,6 +148,7 @@ const CreatePin = () => {
         }
         // Navigate to the next screen
         navigation.navigate('EnterPin', { pin });
+        
         console.log(createPinPayload.firstName);
         console.log(createPinPayload.lastName);
         console.log(createPinPayload.pin);

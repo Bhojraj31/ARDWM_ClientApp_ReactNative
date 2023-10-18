@@ -15,31 +15,44 @@
 import { api } from './index'
 import { TokenRequest, TokenResponse } from '../types/Token';
 import { endpoints } from '../assets/constants/ApiConstants';
-import { CreatePinRequest, CreatePinResponse } from '../types/CreatePin';
+
 
 export const tokenService = api.injectEndpoints({
     endpoints: (build) => ({
-        getToken: build.mutation<TokenResponse, TokenRequest>({
-            query: () => ({
-                url: endpoints.token,
-                method: 'GET',
-                headers: {
-                    'appversion': '7.3'
-                }
-            }),
-        }),
-        createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
-            query: (payload) => ({
-                body: payload,
-                method: 'POST',
-                url: '/addLeadCommon',
-                headers: {
-                    "buId": "27808",
-                    "Content-Type": "application/json",
-                }
-            }),
-        }),
+        getToken: build.query<TokenResponse, TokenRequest>({
+            query: () => endpoints.token,
+        })
     }),
+    overrideExisting: false,
 });
 
-export const { useGetTokenMutation } = tokenService
+export const { useLazyGetTokenQuery } = tokenService
+
+// bss
+
+// export const tokenService = api.injectEndpoints({
+//     endpoints: (build) => ({
+//         getToken: build.mutation<TokenResponse, TokenRequest>({
+//             query: () => ({
+//                 url: endpoints.token,
+//                 method: 'GET',
+//                 headers: {
+//                     'appversion': '7.3'
+//                 }
+//             }),
+//         }),
+//         createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
+//             query: (payload) => ({
+//                 body: payload,
+//                 method: 'POST',
+//                 url: '/addLeadCommon',
+//                 headers: {
+//                     "buId": "27808",
+//                     "Content-Type": "application/json",
+//                 }
+//             }),
+//         }),
+//     }),
+// });
+
+// export const { useGetTokenMutation } = tokenService

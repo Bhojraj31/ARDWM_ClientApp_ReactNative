@@ -3,7 +3,7 @@
 * @param - NA
 * @return -- NA
 * @Name:- store
-* @Type:- Functional Component
+* @Type:- Type Script file
 * @Role:- Store for App
 * @Sprint:- Sprint 1.0 -- Jira 
 * @Created by:- Bhojraj Singh Shekhawat
