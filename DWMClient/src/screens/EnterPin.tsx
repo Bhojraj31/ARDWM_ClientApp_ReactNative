@@ -14,7 +14,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
-import Btn from '../components/Btn';
+import CustomBtn from '../components/CustomBtn';
 import { background, deepskyblue } from '../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
@@ -104,7 +104,7 @@ const EnterPin: React.FC = () => {
           </Text>
 
           {/* Btn */}
-          <Btn
+          <CustomBtn
             textColor={deepskyblue}
             btnLabel="Forgot PIN?"
             Press={() => {

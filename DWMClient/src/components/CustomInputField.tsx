@@ -21,7 +21,7 @@ interface FieldProps extends TextInputProps {
     textAlign?: 'left' | 'center' | 'right';
 }
 
-const InputField: React.FC<FieldProps> = (props) => {
+const CustomInputField: React.FC<FieldProps> = (props) => {
     return (
         <React.Fragment>
             <TextInput
@@ -40,4 +40,4 @@ const InputField: React.FC<FieldProps> = (props) => {
     );
 };
 
-export default InputField;
+export default CustomInputField;

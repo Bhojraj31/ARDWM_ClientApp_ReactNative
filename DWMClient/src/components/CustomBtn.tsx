@@ -23,7 +23,7 @@ type Props = {
     disabled?: boolean; 
 }
 
-export default function Btn({ btnLabel, textColor, Press , disabled}: Props) {
+export default function CustomBtn({ btnLabel, textColor, Press , disabled}: Props) {
     return (
         <Button
             onPress={Press}

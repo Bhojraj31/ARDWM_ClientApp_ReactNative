@@ -14,8 +14,8 @@
 
 import React, { useState } from 'react';
 import { View, Text, ToastAndroid } from 'react-native';
-import InputField from '../components/InputField';
-import Btn from '../components/Btn';
+import CustomInputField from '../components/CustomInputField';
+import CustomBtn from '../components/CustomBtn';
 import { background, deepskyblue } from '../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../service/AddLeadCommonService';
@@ -173,7 +173,7 @@ const CreatePin = () => {
         </View>
         {/* Fields */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <InputField
+          <CustomInputField
             placeholder="Enter PIN"
             secureTextEntry={true}
             maxLength={4}

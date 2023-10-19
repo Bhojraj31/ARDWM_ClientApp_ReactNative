@@ -14,8 +14,8 @@
 
 import { StyleSheet, Text, View } from 'react-native'
 import React,{useState} from 'react'
-import InputField from '../components/InputField'
-import Btn from '../components/Btn'
+import CustomInputField from '../components/CustomInputField'
+import CustomBtn from '../components/CustomBtn'
 import { background, deepskyblue } from '../assets/constants/ColorConstants'
 
 const ForgetPin = () => {
@@ -61,7 +61,7 @@ const ForgetPin = () => {
                     <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 20 }}></View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <InputField
+                        <CustomInputField
                             placeholder="Mobile Number"
                             secureTextEntry={true}
                             maxLength={10}

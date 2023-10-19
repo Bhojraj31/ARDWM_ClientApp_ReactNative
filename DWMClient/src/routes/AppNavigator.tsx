@@ -24,26 +24,44 @@ import CustomHeader from '../components/CustomHeader';
 import ForgetPin from '../screens/ForgetPin';
 import Dashboard from '../screens/Dashboard';
 import SplashScreen from '../screens/SplashScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import RequestOTPScreen from '../screens/RequestOTPScreen';
+import ValidateOtpScreen from '../screens/ValidateOtpScreen';
+import RMLeadMapScreen from '../screens/RMLeadMapScreen';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                {/* <Stack.Screen
-                    name='Home'
-                    component={Home}
-                    options={{
-                        headerShown: false
-                    }}
-                /> */}
+            <Stack.Navigator initialRouteName='Splash'>
                 <Stack.Screen
-                    name='SplashScreen'
+                    name='Splash'
                     component={SplashScreen}
-                    options={{
-                        headerShown: false
-                    }}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name='Welcome'
+                    component={WelcomeScreen}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name='RequestOTP'
+                    component={RequestOTPScreen}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='ValidateOTP'
+                    component={ValidateOtpScreen}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="" />
+                        ),
+                    })}
                 />
                 <Stack.Screen
                     name='UserDetail'
@@ -64,15 +82,17 @@ const AppNavigator = () => {
                     })}
                 />
                 <Stack.Screen
-                    name='EnterPin'
-                    component={EnterPin}
-                    options={{
-                        headerShown: false
-                    }}
+                    name='RMLeadMap'
+                    component={RMLeadMapScreen}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="" />
+                        ),
+                    })}
                 />
                 <Stack.Screen
-                    name='Dashboard'
-                    component={Dashboard}
+                    name='EnterPin'
+                    component={EnterPin}
                     options={{
                         headerShown: false
                     }}

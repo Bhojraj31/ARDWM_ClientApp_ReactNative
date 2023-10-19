@@ -14,9 +14,14 @@
 
 type HomeStackParamsList = {
     Home: object | undefined,
+    Splash: object | undefined,
+    Welcome : object | undefined,
+    RequestOTP: object | undefined,
+    ValidateOTP: object | undefined,
     UserDetail : object | undefined,
     CreatePin : object | undefined,
     EnterPin : object | undefined,
     ForgetPin : object | undefined,
+    RMLeadMap: object | undefined,
     Dashboard : object | undefined,
 }

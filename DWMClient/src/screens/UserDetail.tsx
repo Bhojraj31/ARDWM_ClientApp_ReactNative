@@ -14,8 +14,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import InputField from '../components/InputField';
-import Btn from '../components/Btn';
+import CustomInputField from '../components/CustomInputField';
+import CustomBtn from '../components/CustomBtn';
 import { background, deepskyblue } from '../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -87,14 +87,14 @@ const UserDetail = () => {
 
         {/* Input fields */}
         <View>
-          <InputField
+          <CustomInputField
             placeholder="First Name"
             textAlign='center'
             errorMessage={validationErrors.firstName}
             value={userData.firstName}
             onChangeText={(text) => handleInputChange('firstName', text)}
           />
-          <InputField
+          <CustomInputField
             placeholder="Last Name"
             textAlign='center'
             errorMessage={validationErrors.lastName}
@@ -105,7 +105,7 @@ const UserDetail = () => {
 
         {/* Continue Button */}
         <View>
-          <Btn
+          <CustomBtn
             textColor={deepskyblue}
             btnLabel="Continue"
             Press={handleContinue}
