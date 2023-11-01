@@ -30,9 +30,11 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ navigation, title }) => {
                 {/* <Button title='back'/> */}
                 <Image source={require('../assets/images/Arrow.png')} style={{ width: 30, height: 25, tintColor: deepskyblue }} />
             </TouchableOpacity>
-            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>
-                {title}
-            </Text>
+            <View style={{width:350,justifyContent:'center', alignItems:'center'}}>
+                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>
+                    {title}
+                </Text>
+            </View>
         </View>
     );
 };

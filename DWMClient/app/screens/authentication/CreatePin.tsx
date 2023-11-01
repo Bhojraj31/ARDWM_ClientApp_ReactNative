@@ -1,17 +1,16 @@
 /*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
 /**
-* @param - NA
-* @return -- NA
-* @Name:- Create Pin
-* @Type:- Functional Component
-* @Role:- For showing Create Pin
-* @Sprint:- Sprint 1.0 -- Jira ID DRN-7
-* @Created by:- Bhojraj Singh Shekhawat
-* @Created on:-  06-10-2023
-* @Last Modified by:- No
-* @Last modified on:- No
-*/
-
+ * @param - NA
+ * @return -- NA
+ * @Name:- Create Pin
+ * @Type:- Functional Component
+ * @Role:- For showing Create Pin
+ * @Sprint:- Sprint 1.0 -- Jira ID DRN-7
+ * @Created by:- Bhojraj Singh Shekhawat
+ * @Created on:-  06-10-2023
+ * @Last Modified by:- No
+ * @Last modified on:- No
+ */
 import React, { useState } from 'react';
 import { View, Text, ToastAndroid } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
@@ -21,6 +20,7 @@ import { NavigationProp, useNavigation, useRoute } from '@react-navigation/nativ
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants';
 import CustomToast from '../../components/CustomToast';
+import Toast from 'react-native-toast-message';
 
 // Define a type for the expected route params
 interface RouteParams {
@@ -108,9 +108,19 @@ const CreatePin = () => {
           navigation.navigate('RMLeadMap', { pin, mobileNo });
           console.log(response);
           // Display the reasonCode in a toast
-          ToastAndroid.showWithGravityAndOffset(response.reasonCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 0);
+          Toast.show({
+            type: "success",
+            text1: response.reasonCode,
+            position: 'bottom',
+            visibilityTime: 2000,
+          })
         } else if (response.status === 'fail') {
-          ToastAndroid.showWithGravityAndOffset(response.reasonCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 0);
+          Toast.show({
+            type: "error",
+            text1: response.reasonCode,
+            position: 'bottom',
+            visibilityTime: 2000,
+          })
         }
       } catch (error) {
         // Handle any errors here
@@ -123,21 +133,23 @@ const CreatePin = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
-      <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop:'15%'}}>
+      <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: '15%' }}>
 
         {/* title */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 20, color: 'grey' }}>Please create a 4-digit PIN</Text>
+          <Text style={{ fontSize: 20, color: 'grey' }}>
+            Please create a 4-digit PIN
+          </Text>
           <Text style={{ fontSize: 15, color: 'grey' }}>for quick access</Text>
         </View>
 
         {/* Fields */}
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical:'5%' }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: '5%' }}>
           <CustomInputField
             placeholder="Enter PIN"
             secureTextEntry={true}
             maxLength={4}
-            keyboardType='numeric'
+            keyboardType="numeric"
             errorMessage={validationError}
             value={pin}
             onChangeText={handlePinChange}
@@ -148,6 +160,6 @@ const CreatePin = () => {
       </View>
     </View>
   );
-}
+};
 
 export default CreatePin;

@@ -76,7 +76,7 @@ const ForgetPin = () => {
                     </Text>
                 </View>
                 {/* Fields */}
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row'}}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
                     </View>

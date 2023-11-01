@@ -28,6 +28,7 @@ import SplashScreen from '../screens/SplashScreen';
 import WelcomeScreen from '../screens/authentication/WelcomeScreen';
 import ValidateOtpScreen from '../screens/authentication/ValidateOtpScreen';
 import RMLeadMapScreen from '../screens/authentication/RMLeadMapScreen';
+import CustomToast from '../components/CustomToast';
 // import RMLeadMapScreen from '../screens/authentication/RMLeadMapScreen';
 // import Dashboard from '../screens/authentication/Dashboard';
 
@@ -42,6 +43,13 @@ const AppNavigator = () => {
                     component={SplashScreen}
                     options={{ headerShown: false }}
                 />
+                
+                <Stack.Screen
+                    name='CustomToast'
+                    component={CustomToast}
+                    options={{ headerShown: false }}
+                />
+
                 <Stack.Screen
                     name='Welcome'
                     component={WelcomeScreen}

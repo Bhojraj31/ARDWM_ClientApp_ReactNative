@@ -1,15 +1,34 @@
 import { StyleSheet, Text, Image, View, Button, Touchable, TouchableOpacity } from 'react-native';
-import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import CustomBtn from '../../components/CustomBtn';
+import Toast from 'react-native-toast-message';
+
+// interface RouteParams {
+//   showToast?: boolean;
+// }
 
 const WelcomeScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
+  // const route = useRoute();
+  // const { showToast } = route.params as RouteParams;
+
+  // useEffect(() => {
+  //   if (showToast) {
+  //     // Show toast if showToast is true
+  //     Toast.show({
+  //       type: "success",
+  //       text1: "Toast Message",
+  //       position: 'bottom'
+  //     });
+  //   }
+  // }, [showToast]);
+
   const requestOTP = () => {
-    navigation.navigate('RequestOTP')
-  }
+    navigation.navigate('RequestOTP');
+  };
 
   return (
     <View style={{ backgroundColor: background, height: '100%' }}>
@@ -95,7 +114,7 @@ const WelcomeScreen: React.FC = () => {
 
 
         {/* Custom Btn here */}
-        <View style={{ alignItems: 'center', marginTop:'auto', marginBottom:30 }}>
+        <View style={{ alignItems: 'center', marginTop: 'auto', marginBottom: 30 }}>
           <CustomBtn
             textColor={deepskyblue}
             btnLabel='Login'
@@ -103,6 +122,8 @@ const WelcomeScreen: React.FC = () => {
           />
         </View>
       </View>
+
+      <Toast />
     </View>
   );
 };

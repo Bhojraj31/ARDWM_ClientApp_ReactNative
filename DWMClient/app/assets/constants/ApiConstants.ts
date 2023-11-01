@@ -1,15 +1,15 @@
-/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws *//**
-* @param - NA
-* @return -- NA
-* @Name:- Bhojraj Singh Shekhawat
-* @Type:- Functional Component
-* @Role:- API Constants
-* @Sprint:- Sprint 1.0 
-* @Created by:- Bhojraj Singh Shekhawat
-* @Created on:-  04-10-2023
-* @Last Modified by:- No
-* @Last modified on:- No
-*/
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */ /**
+ * @param - NA
+ * @return -- NA
+ * @Name:- Bhojraj Singh Shekhawat
+ * @Type:- Functional Component
+ * @Role:- API Constants
+ * @Sprint:- Sprint 1.0
+ * @Created by:- Bhojraj Singh Shekhawat
+ * @Created on:-  04-10-2023
+ * @Last Modified by:- No
+ * @Last modified on:- No
+ */
 
 export const serverPaths = {
     DWMServerPathV1: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v1',
@@ -19,8 +19,11 @@ export const serverPaths = {
 export const endpoints = {
     token: '/security/getToken/31009',
     addLeadCommon: 'addLeadCommon',
-    countryApi: 'financialStrategy/getCodeValues?codeTypeId=645',
-    forgetPin:'/security/pin/forgot/1000001855/645095'
+    countryApi: '/financialStrategy/getCodeValues?codeTypeId=645',
+    resendOtp: ' /security/otp/resend/1000054308?countryCodeId=645095',
+    validateOtp: '/security/otp/validate?otp=123456&mobileNo=1000054330',
+    forgetPin: '/security/pin/forgot/1000001855/645095',
+    workSite: '/worksite/participants',
 };
 
 export const apiTypes = {
@@ -32,7 +35,7 @@ export const apiTypes = {
 export const appversion = '1.0';
 
 export const apiType = {
-    value: '', 
+    value: '',
 };
 
 export var apiUrlType = '';

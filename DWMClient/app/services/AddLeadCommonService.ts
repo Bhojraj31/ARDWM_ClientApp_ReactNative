@@ -19,23 +19,23 @@ import { store } from '../store';
 import { apiTypes, endpoints } from '../assets/constants/ApiConstants';
 
 export const AddLeadCommonService = api.injectEndpoints({
-    endpoints: (build) => ({
-        login: build.mutation<LoginResponse, LoginRequest>({
-            query: (payload) => ({
-                body: payload,
-                method: 'POST',
-                url: endpoints.addLeadCommon
-            }),
-        }),
-        createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
-            query: (payload) => ({
-                body: payload,
-                method: 'POST',
-                url: endpoints.addLeadCommon
-            }),
-        })
+  endpoints: (build) => ({
+    login: build.mutation<LoginResponse, LoginRequest>({
+      query: (payload) => ({
+        body: payload,
+        method: 'POST',
+        url: endpoints.addLeadCommon
+      }),
     }),
-    overrideExisting: false,
+    createPin: build.mutation<CreatePinResponse, CreatePinRequest>({
+      query: (payload) => ({
+        body: payload,
+        method: 'POST',
+        url: endpoints.addLeadCommon
+      }),
+    })
+  }),
+  overrideExisting: false,
 });
 
 export const { useLoginMutation, useCreatePinMutation } = AddLeadCommonService;

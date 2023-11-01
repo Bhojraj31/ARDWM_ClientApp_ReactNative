@@ -1,3 +1,17 @@
+/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
+/**
+ * @param - NA
+ * @return -- NA
+ * @Name:- Splash Screen
+ * @Type:- Functional Component
+ * @Role:- App first screen
+ * @Sprint:- Sprint 1.0 -- Jira ID DRN-1
+ * @Created by:- Yashwant Lohar
+ * @Created on:-  11-10-2023
+ * @Last Modified by:- No
+ * @Last modified on:- No
+ */
+
 import { StyleSheet, Image, View, Text } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native'

@@ -12,25 +12,32 @@
 * @Last modified on:- No
 */
 
-
-import { configureStore } from '@reduxjs/toolkit'
-import addLeadCommonReducer from './slices/AddLeadCommonSlice'
-import tokenReducer from './slices/TokenSlice'
-import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
-import { api } from './services/index';
+import {configureStore} from '@reduxjs/toolkit';
+import addLeadCommonReducer from './slices/AddLeadCommonSlice';
+import tokenReducer from './slices/TokenSlice';
+import countryApi from './slices/CountryApiSlice';
+import ValidateApi from './slices/ValidateOtpSlice';
+import ResendApi from './slices/ResendOtpSlice';
+import WorkSiteApi from './slices/WorkSiteSlice';
+import {TypedUseSelectorHook, useSelector, useDispatch} from 'react-redux';
+import {api} from './services/index';
 
 export const store = configureStore({
-    reducer: { 
-        addLeadCommon: addLeadCommonReducer,
-        token: tokenReducer,
-        [api.reducerPath]: api.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({}).concat([api.middleware]),
-})
+  reducer: {
+    addLeadCommon: addLeadCommonReducer,
+    token: tokenReducer,
+    country: countryApi,
+    validateOtp: ValidateApi,
+    resendOtp: ResendApi,
+    workSiteOtp: WorkSiteApi,
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({}).concat([api.middleware]),
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const useTypedDispatch = () => useDispatch<AppDispatch>();
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

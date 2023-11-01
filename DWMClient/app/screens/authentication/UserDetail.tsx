@@ -60,7 +60,7 @@ const UserDetail = () => {
     } else {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
-        [fieldName]: 'Enter ',
+        [fieldName]: 'Please enter alphabet only',
       }));
     }
   };

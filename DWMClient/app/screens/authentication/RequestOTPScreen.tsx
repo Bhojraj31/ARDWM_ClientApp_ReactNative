@@ -21,6 +21,7 @@ import { background, deepskyblue } from '../../assets/constants/ColorConstants'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService'
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants'
+import Toast from 'react-native-toast-message'
 
 const RequestOTPScreen = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
@@ -93,13 +94,23 @@ const RequestOTPScreen = () => {
         if (response.status === 'success') {
           // Navigate to the next screen
           const countryCode = createNumberPayload.countryCodeId;
-          navigation.navigate('ValidateOTP', { mobileNo, countryCode});
-          
+          navigation.navigate('ValidateOTP', { mobileNo, countryCode });
+
           console.log(response);
           // Display the reasonCode in a toast
-          ToastAndroid.showWithGravityAndOffset(response.reasonCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 0);
+          Toast.show({
+            type: "success",
+            text1: response.reasonCode,
+            position: 'bottom',
+            visibilityTime: 2000,
+          })
         } else if (response.status === 'fail') {
-          ToastAndroid.showWithGravityAndOffset(response.reasonCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 0);
+          Toast.show({
+            type: "error",
+            text1: response.reasonCode,
+            position: 'bottom',
+            visibilityTime: 2000,
+          })
         }
       } catch (error) {
         // Handle any errors here
@@ -124,14 +135,15 @@ const RequestOTPScreen = () => {
           </Text>
         </View>
 
-        {/* Fields */}
-        <View style={{ flexDirection: 'row' , marginTop:'5%'}}>
+        <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
           </View>
 
           <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 15 }}></View>
 
+          {/* CustomInputField */}
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <CustomInputField
               placeholder="Mobile Number"
@@ -147,6 +159,7 @@ const RequestOTPScreen = () => {
         </View>
 
       </View>
+
     </View>
   )
 }
