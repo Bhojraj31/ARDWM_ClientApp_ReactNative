@@ -14,13 +14,11 @@
 import React, { useState } from 'react';
 import { View, Text, ToastAndroid } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
-import CustomBtn from '../../components/CustomBtn';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants';
-import CustomToast from '../../components/CustomToast';
-import Toast from 'react-native-toast-message';
+import { useToast } from "react-native-toast-notifications";
 
 // Define a type for the expected route params
 interface RouteParams {
@@ -30,6 +28,7 @@ interface RouteParams {
 }
 
 const CreatePin = () => {
+  const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   // State for Pin
@@ -99,28 +98,22 @@ const CreatePin = () => {
           countryCodeId: '645095',
           userId: '',
         };
+        
         // Make the API request to create the PIN
         apiType.value = apiTypes.post;
         const response = await createPinApiRequest(createPinPayload).unwrap();
         // Check if the response has a reasonCode
         if (response.status === 'success') {
+          
           // Navigate to the next screen
           navigation.navigate('RMLeadMap', { pin, mobileNo });
+
           console.log(response);
           // Display the reasonCode in a toast
-          Toast.show({
-            type: "success",
-            text1: response.reasonCode,
-            position: 'bottom',
-            visibilityTime: 2000,
-          })
+          toast.show(response.reasonCode)
         } else if (response.status === 'fail') {
-          Toast.show({
-            type: "error",
-            text1: response.reasonCode,
-            position: 'bottom',
-            visibilityTime: 2000,
-          })
+          // Display the reasonCode in a toast
+          toast.show(response.reasonCode)
         }
       } catch (error) {
         // Handle any errors here

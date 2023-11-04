@@ -14,7 +14,8 @@
 
 import {api} from './index';
 import {CountryApiResponse, CountryApinRequest} from '../types/Country';
-import {endpoints} from '../assets/constants/ApiConstants';
+import {store} from '../store';
+import {apiTypes, endpoints} from '../assets/constants/ApiConstants';
 
 export const CountryApiService = api.injectEndpoints({
   endpoints: build => ({

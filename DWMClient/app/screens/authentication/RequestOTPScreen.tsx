@@ -16,14 +16,15 @@
 import { StyleSheet, Text, View, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import CustomInputField from '../../components/CustomInputField'
-import CustomBtn from '../../components/CustomBtn'
 import { background, deepskyblue } from '../../assets/constants/ColorConstants'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService'
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants'
-import Toast from 'react-native-toast-message'
+import { useToast } from "react-native-toast-notifications";
+import CustomBtn from '../../components/CustomBtn';
 
 const RequestOTPScreen = () => {
+  const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
   const [mobileNo, setMobileNo] = useState('');
   const [validationError, setValidationError] = useState('');
@@ -97,20 +98,9 @@ const RequestOTPScreen = () => {
           navigation.navigate('ValidateOTP', { mobileNo, countryCode });
 
           console.log(response);
-          // Display the reasonCode in a toast
-          Toast.show({
-            type: "success",
-            text1: response.reasonCode,
-            position: 'bottom',
-            visibilityTime: 2000,
-          })
+          // toast.show(response.reasonCode)
         } else if (response.status === 'fail') {
-          Toast.show({
-            type: "error",
-            text1: response.reasonCode,
-            position: 'bottom',
-            visibilityTime: 2000,
-          })
+          toast.show(response.reasonCode)
         }
       } catch (error) {
         // Handle any errors here
@@ -156,6 +146,15 @@ const RequestOTPScreen = () => {
               onSubmitEditing={handleContinue}
             />
           </View>
+        </View>
+
+        {/* Custom Button */}
+        <View style={{ marginTop: '5%' }}>
+          <CustomBtn
+            btnLabel='Submit'
+            Press={handleContinue}
+            textColor={deepskyblue}
+          />
         </View>
 
       </View>

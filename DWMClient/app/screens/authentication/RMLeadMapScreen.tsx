@@ -7,7 +7,6 @@ import CustomInputField from '../../components/CustomInputField';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants';
-import Toast from 'react-native-toast-message';
 
 const RMLeadMapScreen = () => {
     const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
@@ -78,8 +77,6 @@ const RMLeadMapScreen = () => {
                     onSubmitEditing={handleNextScreen}
                 />
             </View>
-            {/* custom toast here */}
-            <Toast />
         </View>
     );
 };

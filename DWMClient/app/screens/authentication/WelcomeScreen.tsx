@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import CustomBtn from '../../components/CustomBtn';
-import Toast from 'react-native-toast-message';
 
 // interface RouteParams {
 //   showToast?: boolean;
@@ -123,7 +122,6 @@ const WelcomeScreen: React.FC = () => {
         </View>
       </View>
 
-      <Toast />
     </View>
   );
 };

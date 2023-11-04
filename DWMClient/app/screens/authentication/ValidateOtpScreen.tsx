@@ -21,7 +21,6 @@ import { NavigationProp, useNavigation, useRoute } from '@react-navigation/nativ
 import { apiType, apiTypes, endpoints } from '../../assets/constants/ApiConstants';
 import { useLazyResendOTPQuery } from '../../services/ResendOtpService';
 import { useLazyValidateOTPQuery } from '../../services/ValidateOtpService';
-import Toast from 'react-native-toast-message';
 
 interface RouteParams {
   mobileNo: string
@@ -126,8 +125,6 @@ const ValidateOtpScreen = () => {
 
       </View >
 
-      {/* custom toast here */}
-      <Toast />
     </View >
   );
 }

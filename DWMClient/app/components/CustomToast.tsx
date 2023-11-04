@@ -1,25 +1,22 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
-import React from 'react'
+import React,{useEffect} from 'react'
 import Toast from 'react-native-toast-message'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { useToast } from "react-native-toast-notifications";
 
 const CustomToast = () => {
-    const navigation = useNavigation<NavigationProp<HomeStackParamsList>>()
+    // const navigation = useNavigation<NavigationProp<HomeStackParamsList>>()
 
-    const ShowToast = () => {
-        // Pass necessary data to the next screen through navigation params
-        // navigation.navigate('Welcome', { showToast: true });
-        Toast.show({
-            type: "success",
-            text1: "Toast Message",
-            position: 'bottom'
-        });
-    }
+    const toast = useToast();
+
+    useEffect(() => {
+        toast.show("Hello World");
+    }, []);
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>CustomToast</Text>
-            <Button title='ShowToast' onPress={ShowToast} />
+            <Button title='ShowToast' />
         </View>
     )
 }

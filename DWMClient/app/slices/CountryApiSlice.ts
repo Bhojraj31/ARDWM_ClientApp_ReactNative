@@ -12,47 +12,43 @@
  * @Last modified on:- No
  */
 
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit';
 
 export interface CountryApiState {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  status: string,
-  reasonCode: string,
-  responseObject: string,
-  country:string,
-  responseListObject: [
-    {
-      codeValueId: string,
-      codeValue: string,
-      mappedValue1: string,
-      mappedValue2: string,
-      mappedValue3: string,
-      codeTypeId: string,
-    },
-  ];
+  country: string;
+  data: {
+    status: string;
+    responseListObject: [
+      {
+        codeValueId: string;
+        codeValue: string;
+        codeTypeId: string;
+        mappedValue1: string;
+      },
+    ];
+  };
 }
 
 const initialState: CountryApiState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  status: '',
-  reasonCode: '',
-  responseObject: '',
   country: '',
-  responseListObject: [
-    {
-      codeValueId: '',
-      codeValue: '',                                                      
-      mappedValue1: '',                                                     
-      mappedValue2: '',                                                     
-      mappedValue3: '',                                                     
-      codeTypeId: '',                                                     
-    },
-  ],
+  data: {
+    status: '',
+    responseListObject: [
+      {
+        codeValueId: '',
+        codeValue: '',
+        codeTypeId: '',
+        mappedValue1: '',
+      },
+    ],
+  },
 };
 
 // console.log('token',initialState.token);
@@ -64,8 +60,11 @@ export const CountryApi = createSlice({
     setCountry: (state, action: PayloadAction<any>) => {
       state.country = action.payload;
     },
+    // setToken: (state, action: PayloadAction<string>) => {
+    //     state.token = action.payload;
+    // },
   },
 });
 
-export const { setCountry } = CountryApi.actions;
+export const {setCountry} = CountryApi.actions;
 export default CountryApi.reducer;

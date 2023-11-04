@@ -24,5 +24,4 @@ type HomeStackParamsList = {
     ForgetPin : object | undefined,
     RMLeadMap: object | undefined,
     Dashboard : object | undefined,
-    CustomToast : object | undefined,
 }

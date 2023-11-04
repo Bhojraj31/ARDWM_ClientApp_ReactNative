@@ -12,24 +12,22 @@
  * @Last modified on:- No
  */
 
-export interface CountryApinRequest { }
+export interface CountryApinRequest {}
 
 export interface CountryApiResponse {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  status: string,
-  reasonCode: string,
-  responseObject: string,
-  responseListObject: [
-    {
-      codeValueId: string,
-      codeValue: string,
-      mappedValue1: string,
-      mappedValue2: string,
-      mappedValue3: string,
-      codeTypeId: string,
-    },
-  ];
-};
 
+  data: {
+    status: string;
+    responseListObject: [
+      {
+        codeValueId: string;
+        codeValue: string;
+        codeTypeId: string;
+        mappedValue1: string;
+      },
+    ];
+  };
+}
