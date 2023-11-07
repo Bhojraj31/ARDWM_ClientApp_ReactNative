@@ -61,4 +61,8 @@ export interface CreatePinResponse {
   status: string;
   access_token: string;
   refresh_token: string;
+  responseObject: {
+    partyId: string,
+    userId: string
+  }
 }

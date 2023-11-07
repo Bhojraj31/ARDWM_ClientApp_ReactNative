@@ -19,30 +19,14 @@ export interface ValidateOtpState {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  validate: string;
-  data: {
-    status: string;
-    reasonCode: string;
-    responseObject: string;
-    responseListObject: string;
-    refreshToken: string;
-    accessToken: string;
-  };
+  responseObject: object | null;
 }
 
 const initialState: ValidateOtpState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  validate: '',
-  data: {
-    status: '',
-    reasonCode: '',
-    responseObject: '',
-    responseListObject: '',
-    refreshToken: '',
-    accessToken: '',
-  },
+  responseObject: {}
 };
 
 // console.log('token',initialState.token);
@@ -51,14 +35,11 @@ export const ValidateApi = createSlice({
   name: 'validateOtp',
   initialState,
   reducers: {
-    setValidate: (state, action: PayloadAction<any>) => {
-      state.validate = action.payload;
+    clientValidateDetail: (state, action: PayloadAction<any>) => {
+      state.responseObject = action.payload;
     },
-    // setToken: (state, action: PayloadAction<string>) => {
-    //     state.token = action.payload;
-    // },
   },
 });
 
-export const {setValidate} = ValidateApi.actions;
+export const {clientValidateDetail} = ValidateApi.actions;
 export default ValidateApi.reducer;

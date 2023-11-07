@@ -1,31 +1,28 @@
-/*  Copyright: AnandRathi IT Pvt. Ltd. This code is intellectual property of AnandRathi Group, and is protected by the relevant laws */
-/**
-* @param - NA
-* @return -- NA
-* @Name:- Custom InputField
-* @Type:- Functional Component
-* @Role:- Reuable Custom InputField
-* @Sprint:- Sprint 1.0 
-* @Created by:- Bhojraj Singh Shekhawat
-* @Created on:-  04-10-2023
-* @Last Modified by:- No
-* @Last modified on:- No
-*/
-
-import React from 'react';
+// CustomInputField.tsx
+import React, { useEffect, useRef } from 'react';
 import { TextInput, TextInputProps, Text } from 'react-native';
 
 interface FieldProps extends TextInputProps {
     placeholder: string;
-    errorMessage?: string; // Allow errorMessage to be optional
+    errorMessage?: string;
     textAlign?: 'left' | 'center' | 'right';
+    isFirstField?: boolean; // Define a prop to mark as the first field
 }
 
 const CustomInputField: React.FC<FieldProps> = (props) => {
+    const inputRef = useRef<TextInput>(null);
+
+    useEffect(() => {
+        if (props.isFirstField && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [props.isFirstField]);
+
     return (
         <React.Fragment>
             <TextInput
                 {...props}
+                ref={inputRef}
                 style={{
                     color: '#D3D3D3',
                     paddingHorizontal: 8,

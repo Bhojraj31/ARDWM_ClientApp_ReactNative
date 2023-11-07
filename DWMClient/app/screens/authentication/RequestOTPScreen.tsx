@@ -13,41 +13,79 @@
 //  * @Last modified on:- No
 //  */
 
-import { StyleSheet, Text, View, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState, SetStateAction, useEffect } from 'react';
 import CustomInputField from '../../components/CustomInputField'
 import { background, deepskyblue } from '../../assets/constants/ColorConstants'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService'
-import { apiType, apiTypes } from '../../assets/constants/ApiConstants'
+import { apiErrorType, apiResStatus, apiType, apiTypes } from '../../assets/constants/ApiConstants'
 import { useToast } from "react-native-toast-notifications";
 import CustomBtn from '../../components/CustomBtn';
+import { SelectList } from 'react-native-dropdown-select-list';
+import CustomModal from '../../components/CustomModal';
+import { useLazyCountryQuery } from '../../services/CountryApiService';
+import { useDispatch } from 'react-redux';
+import { setCountry } from '../../slices/CountryApiSlice';
+import { store } from '../../store';
+import CountryList from '../../components/countryList';
+import { onBoarding } from '../../slices/onBoardingSlice';
 
 const RequestOTPScreen = () => {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
+
   const [mobileNo, setMobileNo] = useState('');
   const [validationError, setValidationError] = useState('');
-
   const [createPinApiRequest, createPinApiResponse] = useCreatePinMutation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selected, setSelected] = React.useState('91');
+  const [selectedId, setSelectedId] = React.useState('645095');
+
+  const [data, setData] = React.useState([{}]);
+
+  var countryData: { "key": string; "value": string; }[] = [];
+
+  const setupCountryData = () => {
+    const cData = store.getState().country;
+    countryData = [];
+
+    for (let i = 0; i < cData.responseListObject.length; i++) {
+      var obj = cData.responseListObject[i];
+
+      countryData.push({
+        "key": `${obj.mappedValue1}`,
+        "value": `(${obj.mappedValue1})  ${obj.codeValue}`
+      })
+    }
+    // console.log('updated Country Arr:', countryData)
+    setData(countryData)
+  };
+
+  const openModal = () => {
+    setupCountryData();
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const handleNumberChange = (text: string) => {
-    // Only allow 10 numbers
     const validationRegex = /^[0-9]*$/;
-    // check input value number and length is 10
     if (validationRegex.test(text) && text.length <= 10) {
       setMobileNo(text);
-      // Clear the validation error for the field
       setValidationError('');
     } else {
       setValidationError('enter valid number');
     }
   };
 
-  const handleContinue = async () => {
+  const handleNextButtonPress = async () => {
     if (validationError === '' && mobileNo.length === 10) {
       try {
-        // Define the payload for creating the user Number
         const createNumberPayload = {
           buId: '',
           contactPartyId: '',
@@ -88,47 +126,126 @@ const RequestOTPScreen = () => {
           countryCodeId: '645095',
           userId: '',
         };
-        // Make the API request to create the PIN
-        apiType.value = apiTypes.post;
-        const response = await createPinApiRequest(createNumberPayload).unwrap();
-        // Check if the response has a reasonCode
-        if (response.status === 'success') {
-          // Navigate to the next screen
-          const countryCode = createNumberPayload.countryCodeId;
-          navigation.navigate('ValidateOTP', { mobileNo, countryCode });
 
-          console.log(response);
-          // toast.show(response.reasonCode)
-        } else if (response.status === 'fail') {
+        // Start loading indicator
+        setLoading(true);
+        // Make the API request to get OTP
+        apiType.value = apiTypes.post;
+        const response = await createPinApiRequest(
+          createNumberPayload,
+        ).unwrap();
+
+        if (response.status === apiResStatus.SUCCESS) {
+          const ccId = createNumberPayload.countryCodeId;
+          let data = {
+            partId: response.responseObject.partyId,
+            userId: response.responseObject.userId,
+            mobNo: mobileNo,
+            selectedCountryCode: ccId
+          }
+
+          dispatch(onBoarding(data))
+
+          navigation.navigate('ValidateOTP', { mobileNo, ccId });
+        } else if (response.status === apiResStatus.FAIL) {
           toast.show(response.reasonCode)
         }
       } catch (error) {
-        // Handle any errors here
-        console.error('Error creating PIN:', error);
+        toast.show(apiErrorType.APP_MESSAGE)
+      } finally {
+        setLoading(false); // Stop loading indicator in case of success or failure
       }
     } else {
-      setValidationError('enter valid number');
+      setValidationError('Please enter a valid 10-digit Mobile Number');
     }
   };
 
+  // Country Api Response
+  // const dataitem = useCountryQuery({});
+  // console.log('get country data :', JSON.stringify(dataitem));
+
+  const [CountryCodeRequest, CountryCodeResponse] = useLazyCountryQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    apiType.value = apiTypes.get;
+    CountryCodeRequest({});
+  }, []);
+
+  useEffect(() => {
+    if (CountryCodeResponse.data?.status == 'success') {
+      const CopuntryCode = CountryCodeResponse.data.responseListObject;
+      dispatch(setCountry(CopuntryCode));
+      // console.log('CountryCodeResponse:', JSON.stringify(CountryCodeResponse));
+    } else if (CountryCodeResponse.isError) {
+      console.log('response APi Token fail');
+    }
+  }, [CountryCodeResponse]);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
-      <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: '10%' }}>
+      {/* Conditional rendering for the Loader */}
+      {loading && (
+        <View style={StyleSheet.absoluteFill}>
+          <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color={deepskyblue} />
+          </View>
+        </View>
+      )}
+
+      {/* Main content */}
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginTop: '10%' }}>
 
         {/* Tittle */}
-        <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 20, color: 'grey' }}>
             Please enter your 10-digit
           </Text>
-          <Text style={{ fontSize: 18, color: 'grey' }}>
-            mobile number
-          </Text>
+          <Text style={{ fontSize: 18, color: 'grey' }}>mobile number</Text>
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+        {/* Fields */}
 
+        <View style={{ flexDirection: 'row', marginTop: '5%' }}>
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
+            <TouchableOpacity
+              onPress={openModal}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{ color: 'white', fontSize: 17 }}>{`+${selected}`}</Text>
+            </TouchableOpacity>
+            <CustomModal modalContianer={{}} isVisible={modalVisible}>
+              <View
+                style={{
+                  height: '100%',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}>
+                <SelectList
+                  setSelected={(val: SetStateAction<string>, key: SetStateAction<string>) =>
+                    setSelected(val)
+                  }
+                  data={data}
+                  save="key"
+                  maxHeight={330}
+                  searchPlaceholder="Select Country"
+                  placeholder="Select Country"
+                />
+                {/* <CountryList placeHolder={'Search'} sourceData={countryData}/> */}
+
+                <TouchableOpacity
+                  style={{ justifyContent: 'center', alignItems: 'center' }}
+                  onPress={() => {
+                    closeModal();
+                  }}>
+                  <Text style={{ justifyContent: 'center', fontWeight: 'bold' }}>
+                    Close
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </CustomModal>
           </View>
 
           <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 15 }}></View>
@@ -137,13 +254,15 @@ const RequestOTPScreen = () => {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <CustomInputField
               placeholder="Mobile Number"
+              isFirstField={true}
               maxLength={10}
-              keyboardType='numeric'
+              keyboardType="numeric"
               textAlign="left"
               errorMessage={validationError}
               value={mobileNo}
               onChangeText={handleNumberChange}
-              onSubmitEditing={handleContinue}
+              onSubmitEditing={handleNextButtonPress}
+              returnKeyType="done"
             />
           </View>
         </View>
@@ -152,17 +271,16 @@ const RequestOTPScreen = () => {
         <View style={{ marginTop: '5%' }}>
           <CustomBtn
             btnLabel='Submit'
-            Press={handleContinue}
+            Press={handleNextButtonPress}
             textColor={deepskyblue}
           />
         </View>
-
       </View>
 
     </View>
-  )
-}
+  );
+};
 
-export default RequestOTPScreen
+export default RequestOTPScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

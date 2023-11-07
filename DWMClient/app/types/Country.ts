@@ -19,15 +19,13 @@ export interface CountryApiResponse {
   isSuccess: boolean;
   isLoading: boolean;
 
-  data: {
-    status: string;
-    responseListObject: [
-      {
-        codeValueId: string;
-        codeValue: string;
-        codeTypeId: string;
-        mappedValue1: string;
-      },
-    ];
-  };
+  status: string;
+  responseListObject: [
+    {
+      codeValueId: string;
+      codeValue: string;
+      codeTypeId: string;
+      mappedValue1: string;
+    },
+  ];
 }

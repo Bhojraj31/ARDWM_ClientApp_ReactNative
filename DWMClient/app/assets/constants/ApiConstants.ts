@@ -12,18 +12,18 @@
  */
 
 export const serverPaths = {
-    DWMServerPathV1: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v1',
-    DWMServerPathV15: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v15',
+    DWMServerPathV1: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v1/',
+    DWMServerPathV15: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v15/',
 };
 
 export const endpoints = {
-    token: '/security/getToken/31009',
+    token: 'security/getToken/31009',
     addLeadCommon: 'addLeadCommon',
-    countryApi: '/financialStrategy/getCodeValues?codeTypeId=645',
-    resendOtp: ' /security/otp/resend/1000054308?countryCodeId=645095',
-    validateOtp: '/security/otp/validate?otp=123456&mobileNo=1000054330',
-    forgetPin: '/security/pin/forgot/1000001855/645095',
-    workSite: '/worksite/participants',
+    countryApi: 'financialStrategy/getCodeValues?codeTypeId=645',
+    resendOtp: 'security/otp/resend/1000054308?countryCodeId=645095',
+    validateOtp: 'security/otp/validate',
+    forgetPin: 'security/pin/forgot/1000001855/645095',
+    workSite: 'worksite/participants',
 };
 
 export const apiTypes = {
@@ -39,3 +39,12 @@ export const apiType = {
 };
 
 export var apiUrlType = '';
+
+export var apiResStatus = {
+    SUCCESS: 'success',
+    FAIL: 'fail' 
+};
+
+export var apiErrorType = {
+    APP_MESSAGE: 'somthing went wrong!!!',
+};

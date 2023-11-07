@@ -13,14 +13,16 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, ToastAndroid } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import CustomBtn from '../../components/CustomBtn';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
-import { apiType, apiTypes, endpoints } from '../../assets/constants/ApiConstants';
+import { apiResStatus, apiType, apiTypes, endpoints } from '../../assets/constants/ApiConstants';
 import { useLazyResendOTPQuery } from '../../services/ResendOtpService';
 import { useLazyValidateOTPQuery } from '../../services/ValidateOtpService';
+import { clientValidateDetail } from '../../slices/ValidateOtpSlice';
+import { useDispatch } from 'react-redux';
 
 interface RouteParams {
   mobileNo: string
@@ -28,19 +30,21 @@ interface RouteParams {
 }
 const ValidateOtpScreen = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
-  // State for OTP
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  /// -------------------------- Initial Setup -----------------------
   const [otp, setOtp] = useState('');
   const [validationError, setValidationError] = useState('');
 
   const route = useRoute();
   const { mobileNo, countryCode } = route.params as RouteParams;
 
-  const [resendOTPPayload, resendOTPRes] = useLazyResendOTPQuery();
-  const [validateOTPrequest, validateOTPresponse] = useLazyValidateOTPQuery();
+  /// -------------------------- Required Query Setup -----------------------
+  const [resendOtpPayload, resendOtpRes] = useLazyResendOTPQuery();
+  const [validateOtpPayload, validateOtpRes] = useLazyValidateOTPQuery();;
 
-  // console.log('ValidateData OTP  : ---', ValidateData);
-
-  // Validate OTP Response
+  /// -------------------------- Handling TextInput Change ------------------
   const handleOtpChange = (text: string) => {
     const validationRegex = /^[0-6]*$/;
     if (validationRegex.test(text) && text.length <= 6) {
@@ -51,59 +55,91 @@ const ValidateOtpScreen = () => {
     }
   };
 
+  /// -------------------------- Keyboard submission -------------------
   const handleNextButtonPress = () => {
     if (validationError === '' && otp.length === 6) {
-      apiType.value = apiTypes.get;
-      validateOTPrequest({});
-      navigation.navigate('UserDetail', { mobileNo });
-      // if (validateOTPrequest.data?.data.status == 'success') {
-      //   navigation.navigate('UserDetail');
-      //   console.log('response :---', validateOTPrequest);
-      // } else if (validateOTPrequest.data?.data.status == 'fail') {
-      //   console.log('OTP failled', validateOTPrequest);
-      // }
+      // Start loading indicator
+      setLoading(true)
+      validateOtpApi()
     } else {
       setValidationError('Please enter a valid 6-digit PIN');
     }
   };
 
-  //  Resend OTP Response
+  /// -------------------------- Button Actions -------------------------
   const resendOTPClick = () => {
-    // Define the payload for creating the PIN and Save the user details
-    apiType.value = apiTypes.get;
-    endpoints.resendOtp = `/security/otp/resend/${mobileNo}?countryCodeId=${countryCode}`;
-    console.log('endpoints.resendOtp: ', endpoints.resendOtp);
-    resendOTPPayload({});
+    resendOtpApi()
   };
 
+  /// ----------------------------- API Call -------------------------
+  function validateOtpApi() {
+    apiType.value = apiTypes.get;
+    validateOtpPayload({ otp: otp, mobile: mobileNo });
+  }
+
+  function resendOtpApi() {
+    apiType.value = apiTypes.get;
+    resendOtpPayload({});
+  }
+
+  function moveToNextScreen() {
+    navigation.navigate('UserDetail', { mobileNo })
+  }
+
+  /// ----------------------------- Getting API Response -------------------------
   useEffect(() => {
     try {
-      console.log('resendOTPRes try', resendOTPRes.data);
-      console.log('validation response :---', validateOTPresponse.data);
+      // Validate OTP Api Response
+      console.log('validateOtpRes: ', validateOtpRes)
+      if (validateOtpRes.data?.status === apiResStatus.SUCCESS) {
+        dispatch(clientValidateDetail(validateOtpRes.data?.responseObject))
+        setLoading(false)
+        moveToNextScreen()
+      } else if (validateOtpRes.data?.status === apiResStatus.FAIL) {
+        console.log('api fail')
+      } else {
+        console.log('Validate OTP Api  Error')
+      }
 
-      // if (resendOTPRes.data?.data.status == 'success') {
-      //   console.log('response :---', resendOTP.data.data.status);
-      // } else if (resendOTP.data?.data.status == 'fail') {
-      //   console.log('Resend OTP failled', resendOTP.data.data.status);
-      // }
+      // Resend OTP Api Response
+      if (resendOtpRes.data?.data.status === apiResStatus.SUCCESS) {
+        console.log('api succuss')
+      } else if (resendOtpRes.data?.data.status === apiResStatus.FAIL) {
+        console.log('api fail')
+      } else {
+        console.log('resend OTP Api Error')
+      }
     } catch (error) {
       console.error('Error :', error);
+    } finally {
+      // setLoading(false);
     }
-  }, [resendOTPRes, validateOTPresponse]);
+  }, [validateOtpRes, resendOtpRes]);
+
+  /// ----------------------------- Render UI -------------------------
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
-      <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: '15%' }}>
+      {/* Conditional rendering for the Loader */}
+      {loading && (
+        <View style={StyleSheet.absoluteFill}>
+          <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color={deepskyblue} />
+          </View>
+        </View>
+      )}
 
+      {/* Main content */}
+      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: '15%' }}>
         {/* title */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 20, color: 'grey' }}>Please enter 6-digit OTP</Text>
         </View>
+        
         {/* Fields */}
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: '5%' }}>
-
-
           <CustomInputField
             placeholder="Enter OTP"
+            isFirstField={true}
             secureTextEntry={true}
             maxLength={6}
             keyboardType='numeric'
@@ -111,6 +147,7 @@ const ValidateOtpScreen = () => {
             value={otp}
             onChangeText={handleOtpChange}
             onSubmitEditing={handleNextButtonPress}
+            returnKeyType='done'
           />
         </View>
 
@@ -122,7 +159,6 @@ const ValidateOtpScreen = () => {
             Press={resendOTPClick}
           />
         </View>
-
       </View >
 
     </View >

@@ -14,8 +14,7 @@
 
 
 import React from 'react';
-import { Button, Text, TouchableOpacity } from 'react-native';
-// import { Button, Text } from 'react-native-paper';
+import { Text, TouchableOpacity } from 'react-native';
 
 type Props = {
     btnLabel: string,

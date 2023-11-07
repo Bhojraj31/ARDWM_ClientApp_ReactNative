@@ -15,11 +15,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import CustomInputField from '../../components/CustomInputField'
-import CustomBtn from '../../components/CustomBtn'
 import { background, deepskyblue } from '../../assets/constants/ColorConstants'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { apiType, apiTypes } from '../../assets/constants/ApiConstants'
 import { useForgetPinMutation } from '../../services/ForgetPinService';
+import CustomBtn from '../../components/CustomBtn'
 
 const ForgetPin = () => {
     const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
@@ -53,7 +53,6 @@ const ForgetPin = () => {
                     navigation.goBack();
                 } else {
                     console.log('ForgetPin fail Response', response);
-                    // console.log('ForgetPin API Response:', response.responseObject.number);
                 }
             } catch (error) {
                 console.error('API Request Error:', error);
@@ -64,8 +63,9 @@ const ForgetPin = () => {
     };
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
-            <View style={{ flex: .9, justifyContent: 'space-evenly', alignItems: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
+            <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: '10%' }}>
+
                 {/* Tittle */}
                 <View style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <Text style={{ fontSize: 20, color: 'grey' }}>
@@ -75,17 +75,20 @@ const ForgetPin = () => {
                         mobile number
                     </Text>
                 </View>
-                {/* Fields */}
-                <View style={{ flexDirection: 'row'}}>
+
+                <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: '#fff', fontSize: 20 }}>+91</Text>
                     </View>
 
-                    <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 20 }}></View>
+                    <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 15 }}></View>
 
+                    {/* CustomInputField */}
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <CustomInputField
                             placeholder="Mobile Number"
+                            isFirstField={true}
                             maxLength={10}
                             keyboardType='numeric'
                             textAlign="left"
@@ -97,9 +100,16 @@ const ForgetPin = () => {
                     </View>
                 </View>
 
-                <View style={{ flex: .7 }}>
+                {/* Custom Button */}
+                <View style={{ marginTop: '5%' }}>
+                    <CustomBtn
+                        btnLabel='Submit'
+                        Press={handleContinue}
+                        textColor={deepskyblue}
+                    />
                 </View>
             </View>
+
         </View>
     )
 }

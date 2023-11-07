@@ -13,5 +13,5 @@
 */
 
 export const deepskyblue = '#5EB0DE';
-export const grey = '#808588';
+export const lightwhite = '#FFFFF7';
 export const background = '#030f1a';

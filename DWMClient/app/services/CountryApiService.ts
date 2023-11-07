@@ -14,8 +14,7 @@
 
 import {api} from './index';
 import {CountryApiResponse, CountryApinRequest} from '../types/Country';
-import {store} from '../store';
-import {apiTypes, endpoints} from '../assets/constants/ApiConstants';
+import {endpoints} from '../assets/constants/ApiConstants';
 
 export const CountryApiService = api.injectEndpoints({
   endpoints: build => ({
@@ -29,4 +28,4 @@ export const CountryApiService = api.injectEndpoints({
   overrideExisting: true,
 });
 
-export const {useCountryQuery} = CountryApiService;
+export const {useLazyCountryQuery} = CountryApiService;

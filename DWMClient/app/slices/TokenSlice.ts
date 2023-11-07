@@ -30,15 +30,13 @@ export const initialState: TokenState = {
     responseObject: ''
 };
 
-
 export const token = createSlice({
     name: 'token',
     initialState,
     reducers: {
         setToken: (state, action: PayloadAction<string>) => {
             state.responseObject = action.payload;
-            console.log('Token aaya', state.responseObject);
-            
+            console.log('Token aaya', state.responseObject); 
         },
         logout: () => initialState,
     },

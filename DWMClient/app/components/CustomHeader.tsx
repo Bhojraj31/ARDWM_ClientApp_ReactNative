@@ -13,8 +13,7 @@
 */
 
 import React from 'react';
-import { View, TouchableOpacity, Image, Text, Button } from 'react-native';
-// import { IconButton } from 'react-native-paper';
+import { View, TouchableOpacity, Image, Text } from 'react-native';
 import { background, deepskyblue } from '../assets/constants/ColorConstants';
 
 interface CustomHeaderProps {
@@ -26,8 +25,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ navigation, title }) => {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: background, padding: 4 }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                {/* <IconButton icon="chevron-left" size={30} iconColor={deepskyblue}  /> */}
-                {/* <Button title='back'/> */}
                 <Image source={require('../assets/images/Arrow.png')} style={{ width: 30, height: 25, tintColor: deepskyblue }} />
             </TouchableOpacity>
             <View style={{width:350,justifyContent:'center', alignItems:'center'}}>

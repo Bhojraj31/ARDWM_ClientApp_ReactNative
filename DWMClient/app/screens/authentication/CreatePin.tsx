@@ -12,12 +12,12 @@
  * @Last modified on:- No
  */
 import React, { useState } from 'react';
-import { View, Text, ToastAndroid } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
-import { apiType, apiTypes } from '../../assets/constants/ApiConstants';
+import { apiErrorType, apiType, apiTypes } from '../../assets/constants/ApiConstants';
 import { useToast } from "react-native-toast-notifications";
 
 // Define a type for the expected route params
@@ -30,6 +30,8 @@ interface RouteParams {
 const CreatePin = () => {
   const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
+
+  const [loading, setLoading] = useState(false);
 
   // State for Pin
   const [pin, setPin] = useState('');
@@ -98,13 +100,15 @@ const CreatePin = () => {
           countryCodeId: '645095',
           userId: '',
         };
-        
+
+        // Start loading indicator
+        setLoading(true);
         // Make the API request to create the PIN
         apiType.value = apiTypes.post;
         const response = await createPinApiRequest(createPinPayload).unwrap();
         // Check if the response has a reasonCode
         if (response.status === 'success') {
-          
+
           // Navigate to the next screen
           navigation.navigate('RMLeadMap', { pin, mobileNo });
 
@@ -116,8 +120,9 @@ const CreatePin = () => {
           toast.show(response.reasonCode)
         }
       } catch (error) {
-        // Handle any errors here
-        console.error('Error creating PIN:', error);
+        toast.show(apiErrorType.APP_MESSAGE)
+      } finally {
+        setLoading(false); // Stop loading indicator in case of success or failure
       }
     } else {
       setValidationError('Please enter a valid 4-digit PIN');
@@ -126,7 +131,17 @@ const CreatePin = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
-      <View style={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: '15%' }}>
+      {/* Conditional rendering for the Loader */}
+      {loading && (
+        <View style={StyleSheet.absoluteFill}>
+          <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color={deepskyblue} />
+          </View>
+        </View>
+      )}
+
+      {/* Main content */}
+      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: '15%' }}>
 
         {/* title */}
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -140,6 +155,7 @@ const CreatePin = () => {
         <View style={{ alignItems: 'center', justifyContent: 'center', marginVertical: '5%' }}>
           <CustomInputField
             placeholder="Enter PIN"
+            isFirstField={true}
             secureTextEntry={true}
             maxLength={4}
             keyboardType="numeric"
@@ -147,9 +163,9 @@ const CreatePin = () => {
             value={pin}
             onChangeText={handlePinChange}
             onSubmitEditing={handleNextButtonPress}
+            returnKeyType='done'
           />
         </View>
-
       </View>
     </View>
   );

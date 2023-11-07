@@ -15,8 +15,7 @@
 import { api } from './index';
 import { LoginRequest, LoginResponse } from '../types/Login';
 import { CreatePinRequest, CreatePinResponse } from '../types/CreatePin';
-import { store } from '../store';
-import { apiTypes, endpoints } from '../assets/constants/ApiConstants';
+import { endpoints } from '../assets/constants/ApiConstants';
 
 export const AddLeadCommonService = api.injectEndpoints({
   endpoints: (build) => ({

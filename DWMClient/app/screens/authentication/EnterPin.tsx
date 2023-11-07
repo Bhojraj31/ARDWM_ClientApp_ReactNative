@@ -12,7 +12,7 @@
 * @Last modified on:- No
 */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
 import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
@@ -67,11 +67,6 @@ const EnterPin: React.FC = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
-      {/* for space */}
-      {/* <View style={{ flex: .30 }}></View> */}
-
-      {/* <View style={{  alignItems: 'center',}}> */}
-        {/* <View style={{ justifyContent: 'space-evenly', alignItems: 'center' }}> */}
         <Image source={require('../../assets/images/ARLogo_W.png')} style={{ width: 250, height: 90, tintColor: 'white' }} />
 
         {/* Input Box */}
@@ -109,9 +104,6 @@ const EnterPin: React.FC = () => {
           }}
         />
       </View>
-    // </View>
-
-    // </View>
   );
 };
 

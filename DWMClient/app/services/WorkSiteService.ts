@@ -14,15 +14,14 @@
 
 import {api} from './index';
 import {WorkSiteOTPRequest, WorkSiteOTPResponse} from '../types/WorkSite';
-import {store} from '../store';
 import {apiTypes, endpoints} from '../assets/constants/ApiConstants';
 
-export const WorkSiteOtpService = api.injectEndpoints({
-  endpoints: build => ({
+export const WorkSiteService = api.injectEndpoints({
+  endpoints: (build) => ({
     workSiteList: build.mutation<WorkSiteOTPResponse, WorkSiteOTPRequest>({
       query: payload => ({
         body: payload,
-        method: 'POST',
+        method: apiTypes.post,
         url: endpoints.workSite,
       }),
     }),
@@ -30,4 +29,4 @@ export const WorkSiteOtpService = api.injectEndpoints({
   overrideExisting: true,
 });
 
-export const {useWorkSiteListMutation} = WorkSiteOtpService;
+export const {useWorkSiteListMutation} = WorkSiteService;

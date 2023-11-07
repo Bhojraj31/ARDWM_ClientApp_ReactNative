@@ -25,15 +25,17 @@ export const api = createApi({
                 headers.set('appversion', '7.3');
             } else if (apiType.value == apiTypes.get) {
                 headers.set('Token', store.getState().token.responseObject,)
-                headers.set('sourceSystemId', '31010');
+                headers.set('sourceSystemId', '31009');
                 headers.set('buId', '27808');
-                headers.set('macId', '00:0a:95:9d:68:16');
+                headers.set('macId', '166C6788-E2E9-4C9C-8C76-FF405C2DD364');
+                headers.set('Content-Type', 'application/json');
                 headers.set('appversion', '1.1');
             } else if (apiType.value == apiTypes.post) {
                 headers.set('Token', store.getState().token.responseObject,)
                 headers.set('sourceSystemId', '31010');
                 headers.set('buId', '27808');
                 headers.set('macId', '166C6788-E2E9-4C9C-8C76-FF405C2DD364');
+                headers.set('Content-Type', 'application/json');
                 headers.set('appversion', '14.0');
             }
             return headers;

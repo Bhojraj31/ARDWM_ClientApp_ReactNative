@@ -20,17 +20,16 @@ export interface CountryApiState {
   isSuccess: boolean;
   isLoading: boolean;
   country: string;
-  data: {
-    status: string;
-    responseListObject: [
-      {
-        codeValueId: string;
-        codeValue: string;
-        codeTypeId: string;
-        mappedValue1: string;
-      },
-    ];
-  };
+
+  status: string;
+  responseListObject: [
+    {
+      codeValueId: string;
+      codeValue: string;
+      codeTypeId: string;
+      mappedValue1: string;
+    },
+  ];
 }
 
 const initialState: CountryApiState = {
@@ -38,17 +37,16 @@ const initialState: CountryApiState = {
   isSuccess: false,
   isLoading: false,
   country: '',
-  data: {
-    status: '',
-    responseListObject: [
-      {
-        codeValueId: '',
-        codeValue: '',
-        codeTypeId: '',
-        mappedValue1: '',
-      },
-    ],
-  },
+
+  status: '',
+  responseListObject: [
+    {
+      codeValueId: '',
+      codeValue: '',
+      codeTypeId: '',
+      mappedValue1: '',
+    },
+  ],
 };
 
 // console.log('token',initialState.token);
@@ -58,11 +56,8 @@ export const CountryApi = createSlice({
   initialState,
   reducers: {
     setCountry: (state, action: PayloadAction<any>) => {
-      state.country = action.payload;
+      state.responseListObject = action.payload;
     },
-    // setToken: (state, action: PayloadAction<string>) => {
-    //     state.token = action.payload;
-    // },
   },
 });
 

@@ -45,8 +45,6 @@ const initialState: WorkSiteOtpState = {
   },
 };
 
-// console.log('token',initialState.token);
-
 export const WorkSiteApi = createSlice({
   name: 'workSiteOtp',
   initialState,
@@ -54,9 +52,6 @@ export const WorkSiteApi = createSlice({
     setWorkSite: (state, action: PayloadAction<any>) => {
       state.workSite = action.payload;
     },
-    // setToken: (state, action: PayloadAction<string>) => {
-    //     state.token = action.payload;
-    // },
   },
 });
 

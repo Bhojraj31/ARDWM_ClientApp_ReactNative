@@ -96,14 +96,13 @@ const UserDetail = () => {
         <View>
           <CustomInputField
             placeholder="First Name"
-            textAlign='center'
+            isFirstField={true}
             errorMessage={validationErrors.firstName}
             value={userData.firstName}
             onChangeText={(text) => handleInputChange('firstName', text)}
           />
           <CustomInputField
             placeholder="Last Name"
-            textAlign='center'
             errorMessage={validationErrors.lastName}
             value={userData.lastName}
             onChangeText={(text) => handleInputChange('lastName', text)}

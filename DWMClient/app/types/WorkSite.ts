@@ -23,12 +23,11 @@ export interface WorkSiteOTPResponse {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  data: {
-    status: string;
-    reasonCode: string;
-    responseObject: string;
-    responseListObject: string;
-    refreshToken: string;
-    accessToken: string;
-  };
+
+  status: string;
+  reasonCode: string;
+  responseObject: string;
+  responseListObject: string;
+  refreshToken: string;
+  accessToken: string;
 }

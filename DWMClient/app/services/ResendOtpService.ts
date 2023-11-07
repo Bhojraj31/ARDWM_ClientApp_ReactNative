@@ -14,8 +14,7 @@
 
 import {api} from './index';
 import {ResendOTPResponse, ResendOTPRequest} from '../types/ResendOtp';
-import {store} from '../store';
-import {apiTypes, endpoints} from '../assets/constants/ApiConstants';
+import {endpoints} from '../assets/constants/ApiConstants';
 
 export const ResendOtpService = api.injectEndpoints({
   endpoints: build => ({

@@ -54,13 +54,6 @@ const SplashScreen: React.FC = () => {
           source={require('../assets/images/ARLogo_W.png')}
           style={styles.logo}
         />
-        {/* {
-          accessToken && (
-            <Text style={{ color: 'grey', fontSize: 14 }}>
-              Access Token: {accessToken}
-            </Text>
-          )
-        } */}
       </View>
     </View>
   );

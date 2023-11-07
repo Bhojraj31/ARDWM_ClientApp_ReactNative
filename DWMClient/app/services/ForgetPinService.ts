@@ -13,12 +13,8 @@
 */
 
 import { api } from './index';
-import { apiTypes, endpoints } from '../assets/constants/ApiConstants';
+import { endpoints } from '../assets/constants/ApiConstants';
 import { ForgetPinRequest, ForgetPinResponse } from '../types/ForgetPin';
-// interface ForgetPinResponse {
-//     status: string;
-//     reasonCode: string;
-// }
 export const ForgetPinService = api.injectEndpoints({
     endpoints: (build) => ({
         forgetPin: build.mutation<ForgetPinResponse, ForgetPinRequest>({

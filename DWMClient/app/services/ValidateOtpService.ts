@@ -14,16 +14,12 @@
 
 import {api} from './index';
 import {ValidateOTPRequest, ValidateOTPResponse} from '../types/ValidateOtp';
-import {store} from '../store';
-import {apiTypes, endpoints} from '../assets/constants/ApiConstants';
+import {endpoints} from '../assets/constants/ApiConstants';
 
 export const ValidateOtpService = api.injectEndpoints({
-  endpoints: build => ({
+  endpoints: (build) => ({
     validateOTP: build.query<ValidateOTPResponse, ValidateOTPRequest>({
-      query: () => ({
-        method: 'GET',
-        url: endpoints.validateOtp,
-      }),
+      query: obj => `security/otp/validate?otp=${obj.otp}&mobileNo=${obj.mobile}`
     }),
   }),
   overrideExisting: true,

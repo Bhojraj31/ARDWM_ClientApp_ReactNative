@@ -1,29 +1,11 @@
-import { StyleSheet, Text, Image, View, Button, Touchable, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
-import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
+import { StyleSheet, Text, Image, View } from 'react-native';
+import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { background, deepskyblue, lightwhite } from '../../assets/constants/ColorConstants';
 import CustomBtn from '../../components/CustomBtn';
-
-// interface RouteParams {
-//   showToast?: boolean;
-// }
 
 const WelcomeScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
-
-  // const route = useRoute();
-  // const { showToast } = route.params as RouteParams;
-
-  // useEffect(() => {
-  //   if (showToast) {
-  //     // Show toast if showToast is true
-  //     Toast.show({
-  //       type: "success",
-  //       text1: "Toast Message",
-  //       position: 'bottom'
-  //     });
-  //   }
-  // }, [showToast]);
 
   const requestOTP = () => {
     navigation.navigate('RequestOTP');
@@ -51,24 +33,16 @@ const WelcomeScreen: React.FC = () => {
         }}>
         <Text
           style={{
-            color: 'white',
+            color: lightwhite,
             fontSize: 25,
           }}>
           Grow Your Wealth
         </Text>
-      </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignSelf: 'center',
-          marginTop: '3%',
-        }}>
         <Text
           style={{
             color: 'white',
             fontSize: 50,
             fontWeight: 'bold',
-            justifyContent: 'center',
             alignSelf: 'center',
           }}>
           100x
@@ -76,7 +50,8 @@ const WelcomeScreen: React.FC = () => {
         <Text
           style={{
             color: 'white',
-            fontSize: 13,
+            fontSize: 15,
+            alignSelf: 'center',
           }}>
           With Equity Market Protection
         </Text>
@@ -85,7 +60,7 @@ const WelcomeScreen: React.FC = () => {
         style={{
           justifyContent: 'center',
           alignSelf: 'center',
-          marginTop: '10%',
+          marginTop: '5%',
         }}>
 
         {/* Custom Btn here  */}
@@ -95,25 +70,26 @@ const WelcomeScreen: React.FC = () => {
           Press={requestOTP}
         />
       </View>
+
       <View
         style={{
           justifyContent: 'center',
           alignSelf: 'center',
           marginTop: 'auto',
-          marginBottom: 10
+          marginBottom: 20
         }}>
         <Text
           style={{
             color: 'white',
             fontSize: 15,
-            marginBottom: 10
+            marginBottom: 5
           }}>
           Already have an account?
         </Text>
 
 
         {/* Custom Btn here */}
-        <View style={{ alignItems: 'center', marginTop: 'auto', marginBottom: 30 }}>
+        <View style={{ alignItems: 'center', marginTop: 'auto' }}>
           <CustomBtn
             textColor={deepskyblue}
             btnLabel='Login'
