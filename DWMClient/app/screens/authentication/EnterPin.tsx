@@ -73,6 +73,7 @@ const EnterPin: React.FC = () => {
         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop:'20%' }}>
           {pin.map((digit, index) => (
             <TextInput
+             
               key={index}
               ref={(ref) => (inputRefs.current[index] = ref)}
               placeholder=""
@@ -97,6 +98,7 @@ const EnterPin: React.FC = () => {
 
         {/* Btn */}
         <CustomBtn
+        
           textColor={deepskyblue}
           btnLabel="Forgot PIN?"
           Press={() => {

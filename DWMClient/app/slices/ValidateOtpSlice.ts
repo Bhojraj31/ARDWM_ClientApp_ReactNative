@@ -26,7 +26,7 @@ const initialState: ValidateOtpState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  responseObject: {}
+  responseObject: {},
 };
 
 // console.log('token',initialState.token);

@@ -11,6 +11,7 @@
  * @Last Modified by:- No
  * @Last modified on:- No
  */
+
 import React, { useState } from 'react';
 import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
@@ -158,14 +159,25 @@ const CreatePin = () => {
             isFirstField={true}
             secureTextEntry={true}
             maxLength={4}
+            width={95}
             keyboardType="numeric"
-            errorMessage={validationError}
             value={pin}
             onChangeText={handlePinChange}
             onSubmitEditing={handleNextButtonPress}
             returnKeyType='done'
+            textAlign='center'
           />
         </View>
+        {/* shown error message here  */}
+        {
+          validationError ? (
+            <Text style={{ color: 'red' }}>{validationError}</Text>
+          )
+            :
+            (
+              null
+            )
+        }
       </View>
     </View>
   );

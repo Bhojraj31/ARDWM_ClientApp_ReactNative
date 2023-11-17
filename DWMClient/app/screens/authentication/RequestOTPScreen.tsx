@@ -13,23 +13,38 @@
 //  * @Last modified on:- No
 //  */
 
-import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState, SetStateAction, useEffect } from 'react';
-import CustomInputField from '../../components/CustomInputField'
-import { background, deepskyblue } from '../../assets/constants/ColorConstants'
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { useCreatePinMutation } from '../../services/AddLeadCommonService'
-import { apiErrorType, apiResStatus, apiType, apiTypes } from '../../assets/constants/ApiConstants'
-import { useToast } from "react-native-toast-notifications";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Platform,
+} from 'react-native';
+import React, {useState, SetStateAction, useEffect} from 'react';
+import CustomInputField from '../../components/CustomInputField';
+import {background, deepskyblue} from '../../assets/constants/ColorConstants';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useCreatePinMutation} from '../../services/AddLeadCommonService';
+import {
+  apiErrorType,
+  apiResStatus,
+  apiType,
+  apiTypes,
+} from '../../assets/constants/ApiConstants';
+import {useToast} from 'react-native-toast-notifications';
 import CustomBtn from '../../components/CustomBtn';
-import { SelectList } from 'react-native-dropdown-select-list';
+import {SelectList} from 'react-native-dropdown-select-list';
 import CustomModal from '../../components/CustomModal';
-import { useLazyCountryQuery } from '../../services/CountryApiService';
-import { useDispatch } from 'react-redux';
-import { setCountry } from '../../slices/CountryApiSlice';
-import { store } from '../../store';
+import {useLazyCountryQuery} from '../../services/CountryApiService';
+import {useDispatch} from 'react-redux';
+import {setCountry} from '../../slices/CountryApiSlice';
+import {store} from '../../store';
 import CountryList from '../../components/countryList';
-import { onBoarding } from '../../slices/onBoardingSlice';
+import {onBoarding} from '../../slices/onBoardingSlice';
+import CountryListDropDown from '../../components/CountryListDropDown';
+import {date} from 'yup';
 
 const RequestOTPScreen = () => {
   const toast = useToast();
@@ -44,47 +59,61 @@ const RequestOTPScreen = () => {
   const [selected, setSelected] = React.useState('91');
   const [selectedId, setSelectedId] = React.useState('645095');
 
+  const [countryId, setCountryId] = useState('645095');
+  const [countryCode, setCountryCode] = useState('91');
+  const [isCodeClick, setIsCodeClick] = useState(false);
+
   const [data, setData] = React.useState([{}]);
 
-  var countryData: { "key": string; "value": string; }[] = [];
-
-  const setupCountryData = () => {
-    const cData = store.getState().country;
-    countryData = [];
-
-    for (let i = 0; i < cData.responseListObject.length; i++) {
-      var obj = cData.responseListObject[i];
-
-      countryData.push({
-        "key": `${obj.mappedValue1}`,
-        "value": `(${obj.mappedValue1})  ${obj.codeValue}`
-      })
-    }
-    // console.log('updated Country Arr:', countryData)
-    setData(countryData)
-  };
+  var countryData: {country: string; code: string; id: string}[] = [];
 
   const openModal = () => {
-    setupCountryData();
-    setModalVisible(true);
+    setIsCodeClick(!isCodeClick);
   };
 
   const closeModal = () => {
     setModalVisible(false);
   };
 
+  const validateMobNo = () => {
+    var isTrue = false;
+    if (countryCode === '91' && mobileNo.length === 10) {
+      isTrue = true;
+    } else if (
+      countryCode !== '91' &&
+      mobileNo.length > 3 &&
+      mobileNo.length < 15
+    ) {
+      isTrue = true;
+    }
+
+    return isTrue;
+  };
+
   const handleNumberChange = (text: string) => {
     const validationRegex = /^[0-9]*$/;
-    if (validationRegex.test(text) && text.length <= 10) {
+    if (countryCode === '91' && text.length <= 10) {
+      console.log(validationRegex.test(text));
+
+      if (validationRegex.test(text) && text.length <= 10) {
+        setMobileNo(text);
+        setValidationError('');
+      } else {
+        setValidationError('Please enter valid mobile number');
+      }
+    } else if (countryCode !== '91') {
       setMobileNo(text);
-      setValidationError('');
-    } else {
-      setValidationError('enter valid number');
+      if (validationRegex.test(text) && text.length <= 14 && text.length >= 4) {
+        setValidationError('');
+      } else {
+        setValidationError('Please enter valid mobile number');
+      }
     }
   };
 
   const handleNextButtonPress = async () => {
-    if (validationError === '' && mobileNo.length === 10) {
+    // if (validationError === '' && mobileNo.length === 10) {
+    if (validationError === '' && validateMobNo()) {
       try {
         const createNumberPayload = {
           buId: '',
@@ -123,9 +152,11 @@ const RequestOTPScreen = () => {
           latitude: '',
           pin: '',
           arn: '',
-          countryCodeId: '645095',
+          countryCodeId: countryId,
           userId: '',
         };
+
+        console.log(createNumberPayload);
 
         // Start loading indicator
         setLoading(true);
@@ -141,22 +172,22 @@ const RequestOTPScreen = () => {
             partId: response.responseObject.partyId,
             userId: response.responseObject.userId,
             mobNo: mobileNo,
-            selectedCountryCode: ccId
-          }
+            selectedCountryCode: ccId,
+          };
 
-          dispatch(onBoarding(data))
+          dispatch(onBoarding(data));
 
-          navigation.navigate('ValidateOTP', { mobileNo, ccId });
+          navigation.navigate('ValidateOTP', {mobileNo, ccId});
         } else if (response.status === apiResStatus.FAIL) {
-          toast.show(response.reasonCode)
+          toast.show(response.reasonCode);
         }
       } catch (error) {
-        toast.show(apiErrorType.APP_MESSAGE)
+        toast.show(apiErrorType.APP_MESSAGE);
       } finally {
         setLoading(false); // Stop loading indicator in case of success or failure
       }
     } else {
-      setValidationError('Please enter a valid 10-digit Mobile Number');
+      setValidationError('Please enter valid mobile number');
     }
   };
 
@@ -183,82 +214,88 @@ const RequestOTPScreen = () => {
   }, [CountryCodeResponse]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
+    <View style={{flex: 1, alignItems: 'center', backgroundColor: background}}>
       {/* Conditional rendering for the Loader */}
       {loading && (
         <View style={StyleSheet.absoluteFill}>
-          <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#000000',
+              justifyContent: 'center',
+            }}>
             <ActivityIndicator size="large" color={deepskyblue} />
           </View>
         </View>
       )}
 
       {/* Main content */}
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start', marginTop: '10%' }}>
-
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          marginTop: '10%',
+        }}>
         {/* Tittle */}
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 20, color: 'grey' }}>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Text style={{fontSize: 20, color: 'grey'}}>
             Please enter your 10-digit
           </Text>
-          <Text style={{ fontSize: 18, color: 'grey' }}>mobile number</Text>
+          <Text style={{fontSize: 18, color: 'grey'}}>mobile number</Text>
         </View>
 
         {/* Fields */}
 
-        <View style={{ flexDirection: 'row', marginTop: '5%' }}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{flexDirection: 'row', marginTop: '5%'}}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity
               onPress={openModal}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{ color: 'white', fontSize: 17 }}>{`+${selected}`}</Text>
-            </TouchableOpacity>
-            <CustomModal modalContianer={{}} isVisible={modalVisible}>
-              <View
+              <Text
                 style={{
-                  height: '100%',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}>
-                <SelectList
-                  setSelected={(val: SetStateAction<string>, key: SetStateAction<string>) =>
-                    setSelected(val)
-                  }
-                  data={data}
-                  save="key"
-                  maxHeight={330}
-                  searchPlaceholder="Select Country"
-                  placeholder="Select Country"
-                />
-                {/* <CountryList placeHolder={'Search'} sourceData={countryData}/> */}
-
-                <TouchableOpacity
-                  style={{ justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => {
-                    closeModal();
-                  }}>
-                  <Text style={{ justifyContent: 'center', fontWeight: 'bold' }}>
-                    Close
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </CustomModal>
+                  color: 'white',
+                  fontSize: 17,
+                }}>{`+${countryCode}`}</Text>
+            </TouchableOpacity>
           </View>
 
-          <View style={{ borderRightWidth: 1, borderColor: 'grey', height: 40, alignSelf: 'center', marginLeft: 15 }}></View>
+          {/* Country Drop Down */}
+          {isCodeClick ? (
+            <Modal transparent={true}>
+              <CountryListDropDown
+                sourceData={countryData}
+                selectId={item => setCountryId(item)}
+                selectedCode={item => {
+                  setCountryCode(item);
+                  setMobileNo('');
+                }}
+                setShow={val => setIsCodeClick(val)}
+              />
+            </Modal>
+          ) : null}
+
+          <View
+            style={{
+              borderRightWidth: 1,
+              borderColor: 'grey',
+              height: 40,
+              alignSelf: 'center',
+              marginLeft: 15,
+            }}></View>
 
           {/* CustomInputField */}
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <CustomInputField
               placeholder="Mobile Number"
               isFirstField={true}
-              maxLength={10}
-              keyboardType="numeric"
-              textAlign="left"
-              errorMessage={validationError}
+              maxLength={14}
+              keyboardType={
+                Platform.OS === 'android' ? 'numeric' : 'number-pad'
+              }
               value={mobileNo}
               onChangeText={handleNumberChange}
               onSubmitEditing={handleNextButtonPress}
@@ -267,16 +304,19 @@ const RequestOTPScreen = () => {
           </View>
         </View>
 
+        {/* shown error message here  */}
+        {validationError ? (
+          <Text style={{color: 'red'}}>{validationError}</Text>
+        ) : null}
         {/* Custom Button */}
-        <View style={{ marginTop: '5%' }}>
+        <View style={{marginTop: '5%'}}>
           <CustomBtn
-            btnLabel='Submit'
+            btnLabel="Get OTP"
             Press={handleNextButtonPress}
             textColor={deepskyblue}
           />
         </View>
       </View>
-
     </View>
   );
 };

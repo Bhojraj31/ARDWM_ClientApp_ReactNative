@@ -22,9 +22,9 @@ export interface ValidateOTPResponse {
   isSuccess: boolean;
   isLoading: boolean;
 
-  status: string,
+  status: string;
   responseObject: object | null;
-
+  reasonCode: string;
   // data: {
   //   status: string;
   //   reasonCode: string;

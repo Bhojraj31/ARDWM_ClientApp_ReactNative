@@ -14,7 +14,7 @@
 
 import {configureStore} from '@reduxjs/toolkit';
 import addLeadCommonReducer from './slices/AddLeadCommonSlice';
-import tokenReducer from './slices/TokenSlice';
+import tokenReducer from './slices/tokenSlice';
 import countryApi from './slices/CountryApiSlice';
 import ValidateApi from './slices/ValidateOtpSlice';
 import ResendApi from './slices/ResendOtpSlice';

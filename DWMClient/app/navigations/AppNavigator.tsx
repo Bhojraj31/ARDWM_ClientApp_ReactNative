@@ -34,7 +34,9 @@ const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Splash'>
+            <Stack.Navigator initialRouteName='Splash' screenOptions={{
+                animation: 'slide_from_right'
+            }}>
                 <Stack.Screen
                     name='Splash'
                     component={SplashScreen}

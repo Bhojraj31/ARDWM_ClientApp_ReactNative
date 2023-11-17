@@ -18,7 +18,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useLazyGetTokenQuery } from '../services/TokenService';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { setToken } from '../slices/TokenSlice';
+import { setToken } from '../slices/tokenSlice';
 import { apiType, apiTypes } from '../assets/constants/ApiConstants';
 
 const SplashScreen: React.FC = () => {

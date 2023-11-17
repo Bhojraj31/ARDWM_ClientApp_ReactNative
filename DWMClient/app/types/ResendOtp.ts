@@ -18,17 +18,15 @@ export interface ResendOTPResponse {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  data: {
-    status: string;
-    reasonCode: string;
-    responseObject: {
-      partyId: string;
-      userId: string;
-      countrycodeFlag: string;
-      createdDate: string;
-    };
-    responseListObject: null;
-    refreshToken: null;
-    accessToken: null;
+  status: string;
+  reasonCode: string;
+  responseObject: {
+    partyId: string;
+    userId: string;
+    countrycodeFlag: string;
+    createdDate: string;
   };
+  responseListObject: null;
+  refreshToken: null;
+  accessToken: null;
 }

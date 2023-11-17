@@ -36,7 +36,7 @@ const ForgetPin = () => {
             // Clear the validation error for the field
             setValidationError('');
         } else {
-            setValidationError('enter valid number');
+            setValidationError('Please enter valid mobile number');
         }
     };
 
@@ -58,7 +58,7 @@ const ForgetPin = () => {
                 console.error('API Request Error:', error);
             }
         } else {
-            setValidationError('enter valid number');
+            setValidationError('Please enter valid mobile number');
         }
     };
 
@@ -92,12 +92,23 @@ const ForgetPin = () => {
                             maxLength={10}
                             keyboardType='numeric'
                             textAlign="left"
-                            errorMessage={validationError}
                             value={number}
                             onChangeText={handleNumberChange}
                             onSubmitEditing={handleContinue}
                         />
                     </View>
+
+                    {/* shown error message here  */}
+                    {
+                        validationError ?
+                            (
+                                <Text style={{ color: 'red' }}>{validationError}</Text>
+                            )
+                            :
+                            (
+                                null
+                            )
+                    }
                 </View>
 
                 {/* Custom Button */}
