@@ -1,10 +1,10 @@
 export interface LoginRequest {
-  countryCode: string;
-  deviceToken: string;
-  userName: string;
-  pin: string;
-  version: string;
-  isRm: string;
+  countryCode: any;
+  deviceToken: any;
+  userName: any;
+  pin: any;
+  version: any;
+  isRm: any;
 }
 
 export interface LoginResponse {

@@ -20,6 +20,7 @@ import ValidateApi from './slices/ValidateOtpSlice';
 import ResendApi from './slices/ResendOtpSlice';
 import WorkSiteApi from './slices/WorkSiteSlice';
 import onBoardingReducer from './slices/onBoardingSlice';
+import loginUserDetailReducer from './slices/LoginUserDetailSlice'
 import {TypedUseSelectorHook, useSelector, useDispatch} from 'react-redux';
 import {api} from './services/index';
 
@@ -32,6 +33,7 @@ export const store = configureStore({
     resendOtp: ResendApi,
     workSiteOtp: WorkSiteApi,
     onBoarding: onBoardingReducer,
+    loginUserDetail: loginUserDetailReducer,
     
     [api.reducerPath]: api.reducer,
   },

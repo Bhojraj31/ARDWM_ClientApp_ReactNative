@@ -23,7 +23,8 @@ export const AddLeadCommonService = api.injectEndpoints({
       query: (payload) => ({
         body: payload,
         method: 'POST',
-        url: endpoints.addLeadCommon
+        url: endpoints.login
+        
       }),
     }),
     createPin: build.mutation<CreatePinResponse, CreatePinRequest>({

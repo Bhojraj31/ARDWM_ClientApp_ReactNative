@@ -45,6 +45,7 @@ const SplashScreen: React.FC = () => {
       dispatch(setToken(gatedToken));
       console.log('Token API Response:', getTokenApiResponse);
     } else {
+      console.log('Token API Response fail:', getTokenApiResponse);
     }
   }, [getTokenApiResponse]);
 

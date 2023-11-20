@@ -24,6 +24,7 @@ export const endpoints = {
     validateOtp: 'security/otp/validate',
     forgetPin: 'security/pin/forgot/1000001855/645095',
     workSite: 'worksite/participants',
+    login: 'security/login'
 };
 
 export const apiTypes = {

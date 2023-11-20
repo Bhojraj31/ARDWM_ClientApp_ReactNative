@@ -21,6 +21,8 @@ import { useLoginMutation } from '../../services/AddLeadCommonService';
 import { apiResStatus, apiType, apiTypes } from '../../assets/constants/ApiConstants';
 import { useToast } from 'react-native-toast-notifications';
 import { store } from '../../store';
+import { useDispatch } from 'react-redux';
+import { loginUserDetail } from '../../slices/LoginUserDetailSlice';
 
 const EnterPin: React.FC = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
@@ -31,6 +33,7 @@ const EnterPin: React.FC = () => {
   const inputRefs = useRef<(TextInput | null)[]>([null, null, null, null]);
 
   const [loginPayload, loginRes] = useLoginMutation();
+  const dispatch = useDispatch();
 
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -99,22 +102,29 @@ const EnterPin: React.FC = () => {
 
     const loginReq = {
       countryCode: countryCode,
-      deviceToken: '0ADBB91FB98D4847A80F3BCDCB2DE579',
+      deviceToken: 'temp38AKDKdatetimestamp',
       userName: mobNo,
       pin: pinWithoutCommas,
       version: '1.0',
       isRm: '0',
     };
+
+    console.log('loginReq: ',loginReq);
     console.log(loginReq);
 
     try {
       apiType.value = apiTypes.post;
       const res = await loginPayload(loginReq).unwrap();
-
+      console.log(res);
+      
       // Login Api Response
       if (res.status.toLowerCase() === apiResStatus.SUCCESS) {
         toast.show(res.reasonCode);
         console.log('login api succuss');
+
+        dispatch(loginUserDetail(res.responseObject));
+
+        navigation.navigate('Dashboard');
       } else if (res.status.toLowerCase() === apiResStatus.FAIL) {
         toast.show(res.reasonCode);
         console.log('login api fail');
