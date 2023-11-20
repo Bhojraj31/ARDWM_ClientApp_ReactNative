@@ -12,7 +12,7 @@
  * @Last modified on:- No
  */
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ActivityIndicator,
   View,
@@ -22,7 +22,7 @@ import {
 } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import CustomBtn from '../../components/CustomBtn';
-import {background, deepskyblue} from '../../assets/constants/ColorConstants';
+import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import {
   NavigationProp,
   useNavigation,
@@ -33,13 +33,13 @@ import {
   apiResStatus,
   apiType,
   apiTypes,
-  endpoints,
 } from '../../assets/constants/ApiConstants';
-import {useLazyResendOTPQuery} from '../../services/ResendOtpService';
-import {useLazyValidateOTPQuery} from '../../services/ValidateOtpService';
-import {clientValidateDetail} from '../../slices/ValidateOtpSlice';
-import {useDispatch} from 'react-redux';
-import {useToast} from 'react-native-toast-notifications';
+import { useLazyResendOTPQuery } from '../../services/ResendOtpService';
+import { useLazyValidateOTPQuery } from '../../services/ValidateOtpService';
+import { clientValidateDetail } from '../../slices/ValidateOtpSlice';
+import { useDispatch } from 'react-redux';
+import { useToast } from 'react-native-toast-notifications';
+import { store } from '../../store';
 
 interface RouteParams {
   mobileNo: string;
@@ -57,7 +57,7 @@ const ValidateOtpScreen = () => {
   const [validationError, setValidationError] = useState('');
 
   const route = useRoute();
-  const {mobileNo, countryCode} = route.params as RouteParams;
+  const { mobileNo, countryCode } = route.params as RouteParams;
 
   /// -------------------------- Required Query Setup -----------------------
   const [resendOtpPayload, resendOtpRes] = useLazyResendOTPQuery();
@@ -92,64 +92,102 @@ const ValidateOtpScreen = () => {
   };
 
   /// ----------------------------- API Call -------------------------
-  function validateOtpApi() {
+  async function validateOtpApi() {
     setIsResendOTPClicked(false);
     apiType.value = apiTypes.get;
-    validateOtpPayload({otp: otp, mobile: mobileNo});
+
+    try {
+      const res = await validateOtpPayload({ otp: otp, mobile: mobileNo }).unwrap();
+
+      if (res.status === apiResStatus.SUCCESS) {
+        dispatch(clientValidateDetail(res.responseObject));
+        moveToNextScreen();
+      } else if (res.status.toLowerCase() === apiResStatus.FAIL) {
+        toast.show(res.reasonCode);
+        console.log('Validate OTP api fail', res.reasonCode);
+      } else {
+        console.log('Validate OTP Api  Error');
+      }
+    } catch {
+      toast.show(apiErrorType.APP_MESSAGE)
+    } finally {
+      setLoading(false); // Stop loading indicator in case of success or failure
+    }
   }
 
-  function resendOtpApi() {
+  async function resendOtpApi() {
     setIsResendOTPClicked(true);
     apiType.value = apiTypes.get;
-    resendOtpPayload({});
+
+    try {
+      const res = await resendOtpPayload({}).unwrap();
+
+      // Resend OTP Api Response
+      if (res.status === apiResStatus.SUCCESS) {
+        toast.show('OTP sent successfully');
+        console.log('resend OTP api succuss');
+      } else if (res.status === apiResStatus.FAIL) {
+        toast.show(res.reasonCode);
+        console.log('resend OTP api fail');
+      } else {
+        console.log('resend OTP Api Error');
+      }
+    } catch (error) {
+      toast.show(apiErrorType.APP_MESSAGE)
+    } finally {
+      setLoading(false); // Stop loading indicator in case of success or failure
+    }
   }
 
   function moveToNextScreen() {
-    navigation.navigate('UserDetail', {mobileNo});
+    let isActive = store.getState().validateOtp.responseObject.isActive
+    if (isActive === "0") {
+      navigation.navigate('UserDetail', { mobileNo });
+    } else {
+      navigation.navigate('EnterPin');
+    }
   }
 
   /// ----------------------------- Getting API Response -------------------------
-  useEffect(() => {
-    try {
-      if (isResendOtpClicked === false) {
-        // Validate OTP Api Response
-        console.log('validateOtpRes: ', validateOtpRes);
-        if (validateOtpRes.data?.status === apiResStatus.SUCCESS) {
-          dispatch(clientValidateDetail(validateOtpRes.data?.responseObject));
-          // toast.show(validateOtpRes.data?.reasonCode);
-          setLoading(false);
-          moveToNextScreen();
-        } else if (validateOtpRes.data?.status === apiResStatus.FAIL) {
-          toast.show(validateOtpRes.data?.reasonCode);
-          console.log('Validate OTP api fail', validateOtpRes.data?.reasonCode);
-        } else {
-          console.log('Validate OTP Api  Error');
-        }
-      } else {
-        // Resend OTP Api Response
-        if (resendOtpRes.data?.status === apiResStatus.SUCCESS) {
-          toast.show('OTP sent successfully');
-          console.log('resend OTP api succuss');
-        } else if (resendOtpRes.data?.status === apiResStatus.FAIL) {
-          toast.show(resendOtpRes.data?.reasonCode);
-          console.log('resend OTP api fail');
-        } else {
-          console.log('resend OTP Api Error');
-        }
-      }
+  // useEffect(() => {
+  //   try {
+  //     if (isResendOtpClicked === false) {
+  //       // Validate OTP Api Response
+  //       // if (validateOtpRes.data?.status === apiResStatus.SUCCESS) {
+  //       //   dispatch(clientValidateDetail(validateOtpRes.data?.responseObject));
+  //       //   setLoading(false);
+  //       //   moveToNextScreen();
+  //       // } else if (validateOtpRes.data?.status === apiResStatus.FAIL) {
+  //       //   toast.show(validateOtpRes.data?.reasonCode);
+  //       //   console.log('Validate OTP api fail', validateOtpRes.data?.reasonCode);
+  //       // } else {
+  //       //   console.log('Validate OTP Api  Error');
+  //       // }
+  //     } else {
+  //       // // Resend OTP Api Response
+  //       // if (resendOtpRes.data?.status === apiResStatus.SUCCESS) {
+  //       //   toast.show('OTP sent successfully');
+  //       //   console.log('resend OTP api succuss');
+  //       // } else if (resendOtpRes.data?.status === apiResStatus.FAIL) {
+  //       //   toast.show(resendOtpRes.data?.reasonCode);
+  //       //   console.log('resend OTP api fail');
+  //       // } else {
+  //       //   console.log('resend OTP Api Error');
+  //       // }
+  //     }
 
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error :', error);
-    } finally {
-      // setLoading(false);
-    }
-  }, [validateOtpRes, resendOtpRes]);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error('Error :', error);
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // }, [validateOtpRes,resendOtpRes]);
 
   /// ----------------------------- Render UI -------------------------
   return (
-    <View style={{flex: 1, alignItems: 'center', backgroundColor: background}}>
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
       {/* Conditional rendering for the Loader */}
       {loading && (
         <View style={StyleSheet.absoluteFill}>
@@ -173,8 +211,8 @@ const ValidateOtpScreen = () => {
           marginTop: '15%',
         }}>
         {/* title */}
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 20, color: 'grey'}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>
             Please enter 6-digit OTP
           </Text>
         </View>
@@ -190,7 +228,7 @@ const ValidateOtpScreen = () => {
             placeholder="Enter OTP"
             isFirstField={true}
             secureTextEntry={true}
-            width={115}
+            width={100}
             maxLength={6}
             keyboardType="number-pad"
             value={otp}
@@ -203,7 +241,7 @@ const ValidateOtpScreen = () => {
 
         {/* shown error message here  */}
         {validationError ? (
-          <Text style={{color: 'red'}}>{validationError}</Text>
+          <Text style={{ color: 'red' }}>{validationError}</Text>
         ) : null}
 
         {/* Resend OTP button here */}

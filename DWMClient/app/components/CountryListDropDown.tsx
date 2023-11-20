@@ -136,14 +136,10 @@ export default CountryListDropDown;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    flexDirection: 'column',
     justifyContent: 'center',
   },
   Maincontainer: {
     flex: 1,
-    width: '100%',
-    flexDirection: 'column',
     justifyContent: 'center',
   },
   dropdownSelection: {
@@ -161,7 +157,7 @@ const styles = StyleSheet.create({
   },
   dropdownView: {
     width: '90%',
-    height: 450,
+    height: 350,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginTop: 20,

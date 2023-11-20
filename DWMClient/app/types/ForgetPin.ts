@@ -12,7 +12,10 @@
 * @Last modified on:- No
 */
 
-export interface ForgetPinRequest {}
+export interface ForgetPinRequest {
+    mobile: string;
+    countryCode: string;
+}
 
 export interface ForgetPinResponse {
     status: string,

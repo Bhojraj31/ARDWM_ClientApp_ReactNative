@@ -12,14 +12,14 @@
  * @Last modified on:- No
  */
 
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useLazyGetTokenQuery } from '../services/TokenService';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setToken } from '../slices/tokenSlice';
-import { apiType, apiTypes } from '../assets/constants/ApiConstants';
+import { apiErrorType, apiType, apiTypes } from '../assets/constants/ApiConstants';
 
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>()
@@ -44,6 +44,7 @@ const SplashScreen: React.FC = () => {
       const gatedToken = getTokenApiResponse.data.responseObject;
       dispatch(setToken(gatedToken));
       console.log('Token API Response:', getTokenApiResponse);
+    } else {
     }
   }, [getTokenApiResponse]);
 
@@ -72,4 +73,3 @@ const styles = StyleSheet.create({
     height: 70,
   },
 });
-

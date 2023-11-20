@@ -13,10 +13,10 @@
  */
 
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import CustomBtn from '../../components/CustomBtn';
-import {background, deepskyblue} from '../../assets/constants/ColorConstants';
+import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import {
   NavigationProp,
   useNavigation,
@@ -31,7 +31,7 @@ const UserDetail = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   const route = useRoute();
-  const {mobileNo} = route.params as RouteParams;
+  const { mobileNo } = route.params as RouteParams;
 
   // state for userData
   const [userData, setUserData] = React.useState({
@@ -64,9 +64,8 @@ const UserDetail = () => {
       // Set validation errors for other then character.
       setValidationErrors(prevErrors => ({
         ...prevErrors,
-        [fieldName]: `${
-          fieldName === 'firstName' ? 'First' : 'Last'
-        } Name is required `,
+        [fieldName]: `${fieldName === 'firstName' ? 'First' : 'Last'
+          } Name is required `,
       }));
     }
   };
@@ -86,7 +85,7 @@ const UserDetail = () => {
 
   return (
     // parent View
-    <View style={{flex: 1, alignItems: 'center', backgroundColor: background}}>
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
       {/* Content */}
       <View
         style={{
@@ -95,30 +94,37 @@ const UserDetail = () => {
           marginTop: '10%',
         }}>
         {/* tittle */}
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 20, color: 'grey'}}>Do tell us a little</Text>
-          <Text style={{fontSize: 20, color: 'grey'}}>about yourself</Text>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>Do tell us a little</Text>
+          <Text style={{ fontSize: 20, color: 'grey' }}>about yourself</Text>
         </View>
 
         {/* Input fields */}
-        <CustomInputField
-          placeholder="First Name"
-          width={115}
-          isFirstField={true}
-          errorMessage={validationErrors.firstName}
-          value={userData.firstName}
-          textAlign={userData.firstName ? 'center' : 'left'}
-          onChangeText={text => handleInputChange('firstName', text)}
-        />
-        <CustomInputField
-          placeholder="Last Name"
-          width={115}
-          errorMessage={validationErrors.lastName}
-          value={userData.lastName}
-          textAlign={userData.lastName ? 'center' : 'left'}
-          onChangeText={text => handleInputChange('lastName', text)}
-        />
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
 
+          <CustomInputField
+            placeholder="First Name"
+            width={100}
+            isFirstField={true}
+            errorMessage={validationErrors.firstName}
+            value={userData.firstName}
+            textAlign={userData.firstName ? 'center' : 'left'}
+            onChangeText={text => handleInputChange('firstName', text)}
+          />
+
+        </View>
+
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+
+          <CustomInputField
+            placeholder="Last Name"
+            width={100}
+            errorMessage={validationErrors.lastName}
+            value={userData.lastName}
+            textAlign={userData.lastName ? 'center' : 'left'}
+            onChangeText={text => handleInputChange('lastName', text)}
+          />
+        </View>
         {/* Continue Button */}
         <View>
           <CustomBtn

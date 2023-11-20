@@ -44,7 +44,7 @@ const RMLeadMapScreen = () => {
     if (inputField === 'MeetingID') {
       // Validation for Meeting ID: Only alphabets and numbers are allowed, and it must be exactly 7 characters.
       const validationRegex = /^[a-zA-Z0-9]*$/;
-      if (validationRegex.test(text) || text.length === 7) {
+      if (validationRegex.test(text) && text.length <= 7) {
         setMeetingID(text);
         setValidationError('');
       } else {
@@ -53,7 +53,7 @@ const RMLeadMapScreen = () => {
     } else if (inputField === 'PartnerCode') {
       // Validation for Partner Code: Only numbers are allowed, and it must be exactly 6 characters.
       const validationRegex = /^[0-9]*$/;
-      if (validationRegex.test(text) || text.length === 6) {
+      if (validationRegex.test(text) && text.length <=6 ) {
         setPartnerCode(text);
         setValidationError('');
       } else {
@@ -97,8 +97,6 @@ const RMLeadMapScreen = () => {
 
     let partyId = store.getState().onBoarding.data.partId
     let userId = store.getState().onBoarding.data.userId
-
-    console.log('kuch aa', store.getState());
 
     apiType.value = apiTypes.post;
     const worksiteRes = await worksiteBody({
@@ -201,7 +199,7 @@ const RMLeadMapScreen = () => {
 
         <CustomInputField
           placeholder='Meeting ID'
-          width={110}
+          width={100}
           maxLength={7}
           isFirstField={true}
           value={meetingID}
@@ -218,12 +216,13 @@ const RMLeadMapScreen = () => {
           placeholder='Partner Code'
           secureTextEntry={false}
           maxLength={6}
-          width={140}
+          width={120}
           keyboardType='number-pad'
           value={partnerCode}
           textAlign={partnerCode ? 'center' : 'left'}
           onChangeText={(text) => handleChange(text, 'PartnerCode')}
           onSubmitEditing={(text) => handleEndEditing('PartnerCode')}
+          returnKeyType='done'
         />
         {/* shown error message here  */}
         {

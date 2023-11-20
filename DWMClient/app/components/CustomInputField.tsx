@@ -25,10 +25,10 @@ const CustomInputField: React.FC<FieldProps> = props => {
                     ref={inputRef}
                     style={{
                         color: '#D3D3D3',
-                        paddingHorizontal: 8,
                         width: props.width,
-                        fontSize: 19,
-                        marginVertical: 10,
+                        fontSize: 17,
+                        paddingLeft:10,
+                        marginVertical: 5,
                     }}
                     textAlignVertical='center'
                     placeholderTextColor="grey"

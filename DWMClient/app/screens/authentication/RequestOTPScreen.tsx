@@ -157,6 +157,7 @@ const RequestOTPScreen = () => {
         };
 
         console.log(createNumberPayload);
+        console.log(countryId, mobileNo);
 
         // Start loading indicator
         setLoading(true);
@@ -292,7 +293,7 @@ const RequestOTPScreen = () => {
             <CustomInputField
               placeholder="Mobile Number"
               isFirstField={true}
-              maxLength={14}
+              maxLength={countryCode === '91' ? 10:14}
               keyboardType={
                 Platform.OS === 'android' ? 'numeric' : 'number-pad'
               }

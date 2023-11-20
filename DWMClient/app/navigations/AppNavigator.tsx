@@ -28,6 +28,7 @@ import SplashScreen from '../screens/SplashScreen';
 import WelcomeScreen from '../screens/authentication/WelcomeScreen';
 import ValidateOtpScreen from '../screens/authentication/ValidateOtpScreen';
 import RMLeadMapScreen from '../screens/authentication/RMLeadMapScreen';
+import Dashboard from '../screens/authentication/Dashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -108,6 +109,13 @@ const AppNavigator = () => {
                             <CustomHeader navigation={navigation} title="" />
                         ),
                     })}
+                />
+                <Stack.Screen
+                    name='Dashboard'
+                    component={Dashboard}
+                    options={{
+                        headerShown: false
+                    }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

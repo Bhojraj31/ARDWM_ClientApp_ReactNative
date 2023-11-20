@@ -18,13 +18,10 @@ import { ForgetPinRequest, ForgetPinResponse } from '../types/ForgetPin';
 export const ForgetPinService = api.injectEndpoints({
     endpoints: (build) => ({
         forgetPin: build.mutation<ForgetPinResponse, ForgetPinRequest>({
-            query: () => ({
-                method:'GET',
-                url:endpoints.forgetPin
-            }),
+            query: obj => `security/pin/forgot/${obj.mobile}/${obj.countryCode}`
         }),
     }),
-    overrideExisting: false,
+    overrideExisting: true,
 });
 
 export const { useForgetPinMutation } = ForgetPinService;

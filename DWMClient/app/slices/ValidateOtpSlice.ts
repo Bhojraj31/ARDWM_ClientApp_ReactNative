@@ -19,14 +19,32 @@ export interface ValidateOtpState {
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
-  responseObject: object | null;
+  responseObject: {
+    partyId: number;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    isActive: string;
+    countrycodeFlag: number;
+    currentStageId: string;
+    createdDate: number;
+  };
 }
 
 const initialState: ValidateOtpState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  responseObject: {},
+  responseObject: {
+    partyId: 0,
+    userId: 0,
+    firstName: '',
+    lastName: '',
+    isActive: '',
+    countrycodeFlag: 0,
+    currentStageId: '',
+    createdDate: 0
+  }
 };
 
 // console.log('token',initialState.token);
