@@ -12,7 +12,7 @@
 * @Last modified on:- No
 */
 
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import addLeadCommonReducer from './slices/AddLeadCommonSlice';
 import tokenReducer from './slices/tokenSlice';
 import countryApi from './slices/CountryApiSlice';
@@ -21,8 +21,14 @@ import ResendApi from './slices/ResendOtpSlice';
 import WorkSiteApi from './slices/WorkSiteSlice';
 import onBoardingReducer from './slices/onBoardingSlice';
 import loginUserDetailReducer from './slices/LoginUserDetailSlice'
-import {TypedUseSelectorHook, useSelector, useDispatch} from 'react-redux';
-import {api} from './services/index';
+import applicationReducer from './slices/ApplicationSlice';
+import contactReducer from './slices/ContactSlice';
+import videoListReducer from './slices/VideoListSlice'
+import wealthstrategyReducer from './slices/WealthstrategySlice'
+import notificationsSyncReducer from './slices/NotificationsSyncSlice'
+import wealthStrategyConfigReducer from './slices/WealthStrategyConfigSlice'
+import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+import { api } from './services/index';
 
 export const store = configureStore({
   reducer: {
@@ -34,11 +40,24 @@ export const store = configureStore({
     workSiteOtp: WorkSiteApi,
     onBoarding: onBoardingReducer,
     loginUserDetail: loginUserDetailReducer,
-    
+
+    //Dashboard API Reducers 
+    applicationData: applicationReducer,
+    contactData: contactReducer,
+    videoListData: videoListReducer,
+    wealthstrategyData: wealthstrategyReducer,
+    notificationsSyncData: notificationsSyncReducer,
+    wealthStrategyConfigData: wealthStrategyConfigReducer,
+
     [api.reducerPath]: api.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({}).concat([api.middleware]),
+    process.env.NODE_ENV === 'development'
+      ? getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat([api.middleware])
+      : [api.middleware],
+  // getDefaultMiddleware({}).concat([api.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -12,9 +12,8 @@
  * @Last modified on:- No
  */
 
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Image, Text, TextInput, StyleSheet } from 'react-native';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import CustomBtn from '../../components/CustomBtn';
 import { useLoginMutation } from '../../services/AddLeadCommonService';
@@ -23,8 +22,12 @@ import { useToast } from 'react-native-toast-notifications';
 import { store } from '../../store';
 import { useDispatch } from 'react-redux';
 import { loginUserDetail } from '../../slices/LoginUserDetailSlice';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const EnterPin: React.FC = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   // UseState For set pins
@@ -76,8 +79,13 @@ const EnterPin: React.FC = () => {
       console.log(newPin);
       // target to next input field if available
       if (index < inputRefs.current.length - 1) {
+        // if (index < inputRefs.current.length - 1 && newPin[index] !== '') {
         inputRefs.current[index + 1]?.focus();
       }
+      // Set focus to the next input field if the current one is filled
+      // if (value.length === 1 && index < inputRefs.current.length - 1 && newPin[index] !== '') {
+      //   inputRefs.current[index + 1]?.focus();
+      // }
 
       // Check if all pins are entered (4 digits)
       if (index === 3 && newPin.every(digit => digit !== '')) {
@@ -87,7 +95,7 @@ const EnterPin: React.FC = () => {
         // console.log(pinStr);
         callLoginApi(newPin)
 
-        navigation.navigate('Dashboard');
+        navigation.navigate('RightDrawerNav');
       }
     }
   };
@@ -109,14 +117,14 @@ const EnterPin: React.FC = () => {
       isRm: '0',
     };
 
-    console.log('loginReq: ',loginReq);
+    console.log('loginReq: ', loginReq);
     console.log(loginReq);
 
     try {
       apiType.value = apiTypes.post;
       const res = await loginPayload(loginReq).unwrap();
       console.log(res);
-      
+
       // Login Api Response
       if (res.status.toLowerCase() === apiResStatus.SUCCESS) {
         toast.show(res.reasonCode);
@@ -182,7 +190,7 @@ const EnterPin: React.FC = () => {
 
       {/* Btn */}
       <CustomBtn
-        textColor={deepskyblue}
+        textColor={button}
         btnLabel="Forgot PIN?"
         Press={() => {
           navigation.navigate('ForgetPin');

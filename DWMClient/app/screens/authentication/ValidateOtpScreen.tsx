@@ -13,39 +13,27 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import {
-  ActivityIndicator,
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-} from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import CustomBtn from '../../components/CustomBtn';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {
-  apiErrorType,
-  apiResStatus,
-  apiType,
-  apiTypes,
-} from '../../assets/constants/ApiConstants';
+import { NavigationProp, useNavigation, useRoute, } from '@react-navigation/native';
+import { apiErrorType, apiResStatus, apiType, apiTypes, } from '../../assets/constants/ApiConstants';
 import { useLazyResendOTPQuery } from '../../services/ResendOtpService';
 import { useLazyValidateOTPQuery } from '../../services/ValidateOtpService';
 import { clientValidateDetail } from '../../slices/ValidateOtpSlice';
 import { useDispatch } from 'react-redux';
 import { useToast } from 'react-native-toast-notifications';
 import { store } from '../../store';
+import { useTheme } from '../../theme/ThemeProvider';
 
 interface RouteParams {
   mobileNo: string;
   countryCode: string;
 }
 const ValidateOtpScreen = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { label, button, background } = theme.colors;
   const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
   const dispatch = useDispatch();
@@ -197,7 +185,7 @@ const ValidateOtpScreen = () => {
               backgroundColor: '#000000',
               justifyContent: 'center',
             }}>
-            <ActivityIndicator size="large" color={deepskyblue} />
+            <ActivityIndicator size="large" color={button} />
           </View>
         </View>
       )}
@@ -247,7 +235,7 @@ const ValidateOtpScreen = () => {
         {/* Resend OTP button here */}
         <View>
           <CustomBtn
-            textColor={deepskyblue}
+            textColor={button}
             btnLabel="Resend OTP"
             Press={resendOTPClick}
           />

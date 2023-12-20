@@ -20,8 +20,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setToken } from '../slices/tokenSlice';
 import { apiErrorType, apiType, apiTypes } from '../assets/constants/ApiConstants';
+import { useTheme } from '../theme/ThemeProvider';
 
 const SplashScreen: React.FC = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { background } = theme.colors;
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>()
   const [getTokenApiRequest, getTokenApiResponse] = useLazyGetTokenQuery();
   const dispatch = useDispatch();
@@ -34,7 +38,7 @@ const SplashScreen: React.FC = () => {
     setTimeout(() => {
       // Replace 'Home' with the name of your main component or the component you want to navigate to after the splash screen.
       // You can use React Navigation for navigation.
-      navigation.navigate('Welcome')
+      navigation.navigate('EnterPin')
     }, 5000); // 5000 milliseconds = 5 seconds
   }, []);
 
@@ -50,7 +54,7 @@ const SplashScreen: React.FC = () => {
   }, [getTokenApiResponse]);
 
   return (
-    <View style={{ backgroundColor: '#030f1a', height: '100%' }}>
+    <View style={{ backgroundColor: background, height: '100%' }}>
       <View style={styles.container}>
         <Image
           source={require('../assets/images/ARLogo_W.png')}

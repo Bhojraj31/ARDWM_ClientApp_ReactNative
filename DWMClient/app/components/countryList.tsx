@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text, TextInput, TouchableOpacity } from 'react-native';
+import { useTheme } from '../theme/ThemeProvider';
 // import { ListItem } from 'react-native-elements';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -16,6 +17,9 @@ const CountryList: React.FC<CountryListProps> = ({
   sourceData,
   onSelect = () => { },
 }) => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { text} = theme.colors;
 
   const [search, setSearch] = useState('');
   const [filteredData, setFilteredData] = useState(sourceData);
@@ -40,7 +44,7 @@ const CountryList: React.FC<CountryListProps> = ({
           });
           setFilteredData(result)
         }}
-        style={{ height: 50, marginHorizontal: 5, marginVertical: 5, borderWidth: 1, paddingHorizontal: 5, borderColor: 'grey', borderRadius: 10 }}
+        style={{ height: 50, marginHorizontal: 5, marginVertical: 5, borderWidth: 1, paddingHorizontal: 5, borderColor: text, borderRadius: 10 }}
       />
       <FlatList
         style={{ height: 350, marginHorizontal: 10 }}

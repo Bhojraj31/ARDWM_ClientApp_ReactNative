@@ -16,18 +16,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
 import CustomBtn from '../../components/CustomBtn';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute, } from '@react-navigation/native';
+import { useTheme } from '../../theme/ThemeProvider';
 
 interface RouteParams {
   mobileNo: string;
 }
 
 const UserDetail = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   const route = useRoute();
@@ -128,7 +127,7 @@ const UserDetail = () => {
         {/* Continue Button */}
         <View>
           <CustomBtn
-            textColor={deepskyblue}
+            textColor={button}
             btnLabel="Continue"
             Press={handleContinue}
           />

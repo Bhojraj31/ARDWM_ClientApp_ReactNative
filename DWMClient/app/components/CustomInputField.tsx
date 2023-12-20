@@ -1,6 +1,7 @@
 // CustomInputField.tsx
 import React, { useEffect, useRef } from 'react';
 import { TextInput, TextInputProps, Text, View } from 'react-native';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface FieldProps extends TextInputProps {
     placeholder: string;
@@ -10,6 +11,9 @@ interface FieldProps extends TextInputProps {
 }
 
 const CustomInputField: React.FC<FieldProps> = props => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { text } = theme.colors;
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
@@ -24,14 +28,14 @@ const CustomInputField: React.FC<FieldProps> = props => {
                     {...props}
                     ref={inputRef}
                     style={{
-                        color: '#D3D3D3',
+                        color: text,
                         width: props.width,
                         fontSize: 17,
                         paddingLeft:10,
                         marginVertical: 5,
                     }}
                     textAlignVertical='center'
-                    placeholderTextColor="grey"
+                    placeholderTextColor={text}
                 />
                 {props.errorMessage && <Text style={{ color: 'red' }}>{props.errorMessage}</Text>}
         </React.Fragment>

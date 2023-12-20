@@ -22,7 +22,6 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import CustomInputField from '../../components/CustomInputField';
-import {background, deepskyblue} from '../../assets/constants/ColorConstants';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {
   apiErrorType,
@@ -35,8 +34,12 @@ import CustomBtn from '../../components/CustomBtn';
 import CountryListDropDown from '../../components/CountryListDropDown';
 import {store} from '../../store';
 import { useToast } from "react-native-toast-notifications";
+import { useTheme } from '../../theme/ThemeProvider';
 
 const ForgetPin = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
   const [number, setNumber] = useState('');
@@ -209,7 +212,7 @@ const ForgetPin = () => {
           <CustomBtn
             btnLabel="Get New PIN"
             Press={handleContinue}
-            textColor={deepskyblue}
+            textColor={button}
           />
         </View>
       </View>

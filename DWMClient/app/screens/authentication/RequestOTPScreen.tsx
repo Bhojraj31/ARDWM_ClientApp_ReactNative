@@ -22,31 +22,25 @@ import {
   Modal,
   Platform,
 } from 'react-native';
-import React, {useState, SetStateAction, useEffect} from 'react';
+import React, { useState, SetStateAction, useEffect } from 'react';
 import CustomInputField from '../../components/CustomInputField';
-import {background, deepskyblue} from '../../assets/constants/ColorConstants';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {useCreatePinMutation} from '../../services/AddLeadCommonService';
-import {
-  apiErrorType,
-  apiResStatus,
-  apiType,
-  apiTypes,
-} from '../../assets/constants/ApiConstants';
-import {useToast} from 'react-native-toast-notifications';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useCreatePinMutation } from '../../services/AddLeadCommonService';
+import { apiErrorType, apiResStatus, apiType, apiTypes, } from '../../assets/constants/ApiConstants';
+import { useToast } from 'react-native-toast-notifications';
 import CustomBtn from '../../components/CustomBtn';
-import {SelectList} from 'react-native-dropdown-select-list';
-import CustomModal from '../../components/CustomModal';
-import {useLazyCountryQuery} from '../../services/CountryApiService';
-import {useDispatch} from 'react-redux';
-import {setCountry} from '../../slices/CountryApiSlice';
-import {store} from '../../store';
-import CountryList from '../../components/countryList';
-import {onBoarding} from '../../slices/onBoardingSlice';
+import { useLazyCountryQuery } from '../../services/CountryApiService';
+import { useDispatch } from 'react-redux';
+import { setCountry } from '../../slices/CountryApiSlice';
+import { onBoarding } from '../../slices/onBoardingSlice';
 import CountryListDropDown from '../../components/CountryListDropDown';
-import {date} from 'yup';
+import { useTheme } from '../../theme/ThemeProvider';
+// import {date} from 'yup';
 
 const RequestOTPScreen = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -65,7 +59,7 @@ const RequestOTPScreen = () => {
 
   const [data, setData] = React.useState([{}]);
 
-  var countryData: {country: string; code: string; id: string}[] = [];
+  var countryData: { country: string; code: string; id: string }[] = [];
 
   const openModal = () => {
     setIsCodeClick(!isCodeClick);
@@ -178,7 +172,7 @@ const RequestOTPScreen = () => {
 
           dispatch(onBoarding(data));
 
-          navigation.navigate('ValidateOTP', {mobileNo, ccId});
+          navigation.navigate('ValidateOTP', { mobileNo, ccId });
         } else if (response.status === apiResStatus.FAIL) {
           toast.show(response.reasonCode);
         }
@@ -215,7 +209,7 @@ const RequestOTPScreen = () => {
   }, [CountryCodeResponse]);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', backgroundColor: background}}>
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: background }}>
       {/* Conditional rendering for the Loader */}
       {loading && (
         <View style={StyleSheet.absoluteFill}>
@@ -225,7 +219,7 @@ const RequestOTPScreen = () => {
               backgroundColor: '#000000',
               justifyContent: 'center',
             }}>
-            <ActivityIndicator size="large" color={deepskyblue} />
+            <ActivityIndicator size="large" color={button} />
           </View>
         </View>
       )}
@@ -239,17 +233,17 @@ const RequestOTPScreen = () => {
           marginTop: '10%',
         }}>
         {/* Tittle */}
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontSize: 20, color: 'grey'}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20, color: 'grey' }}>
             Please enter your 10-digit
           </Text>
-          <Text style={{fontSize: 18, color: 'grey'}}>mobile number</Text>
+          <Text style={{ fontSize: 18, color: 'grey' }}>mobile number</Text>
         </View>
 
         {/* Fields */}
 
-        <View style={{flexDirection: 'row', marginTop: '5%'}}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={openModal}
               style={{
@@ -289,11 +283,11 @@ const RequestOTPScreen = () => {
             }}></View>
 
           {/* CustomInputField */}
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <CustomInputField
               placeholder="Mobile Number"
               isFirstField={true}
-              maxLength={countryCode === '91' ? 10:14}
+              maxLength={countryCode === '91' ? 10 : 14}
               keyboardType={
                 Platform.OS === 'android' ? 'numeric' : 'number-pad'
               }
@@ -307,14 +301,14 @@ const RequestOTPScreen = () => {
 
         {/* shown error message here  */}
         {validationError ? (
-          <Text style={{color: 'red'}}>{validationError}</Text>
+          <Text style={{ color: 'red' }}>{validationError}</Text>
         ) : null}
         {/* Custom Button */}
-        <View style={{marginTop: '5%'}}>
+        <View style={{ marginTop: '5%' }}>
           <CustomBtn
             btnLabel="Get OTP"
             Press={handleNextButtonPress}
-            textColor={deepskyblue}
+            textColor={button}
           />
         </View>
       </View>

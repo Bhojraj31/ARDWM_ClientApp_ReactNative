@@ -15,11 +15,11 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import CustomInputField from '../../components/CustomInputField';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
 import { apiErrorType, apiType, apiTypes } from '../../assets/constants/ApiConstants';
 import { useToast } from "react-native-toast-notifications";
+import { useTheme } from '../../theme/ThemeProvider';
 
 // Define a type for the expected route params
 interface RouteParams {
@@ -29,6 +29,9 @@ interface RouteParams {
 }
 
 const CreatePin = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
@@ -136,7 +139,7 @@ const CreatePin = () => {
       {loading && (
         <View style={StyleSheet.absoluteFill}>
           <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color={deepskyblue} />
+            <ActivityIndicator size="large" color={button} />
           </View>
         </View>
       )}

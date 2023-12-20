@@ -14,7 +14,6 @@
 
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { background, deepskyblue } from '../../assets/constants/ColorConstants';
 import CustomInputField from '../../components/CustomInputField';
 import { NavigationProp, useNavigation, } from '@react-navigation/native';
 import { useCreatePinMutation } from '../../services/AddLeadCommonService';
@@ -24,8 +23,12 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { store } from '../../store';
 import { useToast } from 'react-native-toast-notifications';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const RMLeadMapScreen = () => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { button, background } = theme.colors;
   const toast = useToast();
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
@@ -186,14 +189,14 @@ const RMLeadMapScreen = () => {
       {loading && (
         <View style={StyleSheet.absoluteFill}>
           <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color={deepskyblue} />
+            <ActivityIndicator size="large" color={button} />
           </View>
         </View>
       )}
 
       {/* Main content */}
       <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginTop: '10%' }}>
-        <Text style={{ color: deepskyblue, fontSize: 20 }}>
+        <Text style={{ color: button, fontSize: 20 }}>
           Please Enter Meeting ID/Partner Code
         </Text>
 

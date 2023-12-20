@@ -29,21 +29,38 @@ import WelcomeScreen from '../screens/authentication/WelcomeScreen';
 import ValidateOtpScreen from '../screens/authentication/ValidateOtpScreen';
 import RMLeadMapScreen from '../screens/authentication/RMLeadMapScreen';
 import Dashboard from '../screens/authentication/Dashboard';
+import RightDrawerNav from './DrawerNavigation/RightDrawerNav';
+import DrawerNav from './DrawerNavigation/DraweNav';
+import BottomNav from './BottomNavigation/BottomNav';
+import Profile from '../screens/dashboardFlow/DrawerNavScreen/Profile';
+import Portfolio from '../screens/dashboardFlow/TopNavScreen/Portfolio';
+import Activity from '../screens/dashboardFlow/TopNavScreen/Activity';
+import Transact from '../screens/dashboardFlow/TopNavScreen/Transact';
+import Registration from '../screens/dashboardFlow/TopNavScreen/Registration';
+import Invest from '../screens/dashboardFlow/TopNavScreen/TransactScreens/Invest';
+import Switch from '../screens/dashboardFlow/TopNavScreen/TransactScreens/Switch';
+import Withdraw from '../screens/dashboardFlow/TopNavScreen/TransactScreens/Withdraw';
+import SwitchDetails from '../screens/dashboardFlow/TopNavScreen/TransactScreens/SwitchScreens/SwitchDetails';
+import StrategyDetails from '../screens/dashboardFlow/BottomNavScreen/StrategyDetails';
 
 const Stack = createNativeStackNavigator();
-
-const AppNavigator = () => {
+// ------ React Native Funcational Export Component with styles------
+function AppNavigator() {
+    // ------ Return react native component here ------
     return (
+        // ------ NavigationContainer here ------
         <NavigationContainer>
+            {/* ------ Stack navigation here ------ */}
             <Stack.Navigator initialRouteName='Splash' screenOptions={{
                 animation: 'slide_from_right'
             }}>
+                {/* ------ Stack navigation Screens here ------ */}
                 <Stack.Screen
                     name='Splash'
                     component={SplashScreen}
                     options={{ headerShown: false }}
                 />
-                
+
                 <Stack.Screen
                     name='Welcome'
                     component={WelcomeScreen}
@@ -110,12 +127,123 @@ const AppNavigator = () => {
                         ),
                     })}
                 />
-                <Stack.Screen
+                {/* <Stack.Screen
                     name='Dashboard'
                     component={Dashboard}
                     options={{
                         headerShown: false
                     }}
+                /> */}
+                <Stack.Screen
+                    name='RightDrawerNav'
+                    component={RightDrawerNav}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name='DrawerNav'
+                    component={DrawerNav}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name='BottomNav'
+                    component={BottomNav}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name='Profile'
+                    component={Profile}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Profile" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Portfolio'
+                    component={Portfolio}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Portfolio" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Activity'
+                    component={Activity}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Activity" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Transact'
+                    component={Transact}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Transact" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Registration'
+                    component={Registration}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Registration" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Invest'
+                    component={Invest}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Invest" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Switch'
+                    component={Switch}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Switch" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='Withdraw'
+                    component={Withdraw}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Withdraw" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='SwitchDetails'
+                    component={SwitchDetails}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="SwitchDetails" />
+                        ),
+                    })}
+                />
+                <Stack.Screen
+                    name='StrategyDetails'
+                    component={StrategyDetails}
+                    options={({ navigation }) => ({
+                        header: () => (
+                            <CustomHeader navigation={navigation} title="Set Wealth Target" />
+                        ),
+                    })}
                 />
             </Stack.Navigator>
         </NavigationContainer>

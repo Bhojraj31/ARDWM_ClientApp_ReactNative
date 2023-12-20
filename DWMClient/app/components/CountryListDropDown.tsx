@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {store} from '../store';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import { useTheme } from '../theme/ThemeProvider';
+import { IconButton } from 'react-native-paper';
 interface CountryListProps {
   sourceData: Array<{country: string; code: string; id: string}>;
   selectedCode?: (item: string) => void;
@@ -24,6 +26,9 @@ const CountryListDropDown: React.FC<CountryListProps> = ({
   selectId = () => {},
   setShow = () => {},
 }) => {
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { text,button, background } = theme.colors;
   // const countryList = [
   //   {country: 'Bharat', code: '91', id: '0001'},
   //   {country: 'SriLanka', code: '92', id: '0002'},
@@ -95,9 +100,10 @@ const CountryListDropDown: React.FC<CountryListProps> = ({
           {isClick ? (
             <View style={styles.dropdownView}>
               <View style={styles.searchInputView}>
-                <View style={styles.searchIcon}>
-                  <Icon name="search" size={15} color="gray" />
-                </View>
+                {/* <View style={styles.searchIcon}> */}
+                <IconButton icon="magnify" size={25} iconColor={text} />
+                  {/* <Icon name="search" size={15} color="gray" /> */}
+                {/* </View> */}
                 <TextInput
                   // ref={searchRef}
                   style={styles.searchInput}
@@ -169,21 +175,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   searchInputView: {
-    width: '90%',
-    height: 50,
     borderBottomColor: '#8e8e8e',
     borderBottomWidth: 0.2,
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingHorizontal:5,
+    justifyContent:'space-around',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  searchIcon: {
-    width: 20,
-    height: 20,
   },
   searchInput: {
     width: '90%',

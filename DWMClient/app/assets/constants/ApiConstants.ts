@@ -11,9 +11,16 @@
  * @Last modified on:- No
  */
 
+export const Domain_stage = {
+    DWMUrl: 'https://dwm-stage.anandrathiwealth.in/',
+    haddopUrl: 'https://bigdataapi-dwm.anandrathiwealth.in/'
+}
+
 export const serverPaths = {
-    DWMServerPathV1: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v1/',
-    DWMServerPathV15: 'https://dwm-stage.anandrathiwealth.in/WMService/api/v15/',
+    // Stage Server Paths
+    DWMServerPathV1: `${Domain_stage.DWMUrl}WMService/api/v1/`,
+    DWMServerPathV15: `${Domain_stage.DWMUrl}WMService/api/v15/`,
+    haddopServerPathV6: `${Domain_stage.haddopUrl}DWMManageCore/ClientDashBoard/v6/`
 };
 
 export const endpoints = {
@@ -24,7 +31,16 @@ export const endpoints = {
     validateOtp: 'security/otp/validate',
     forgetPin: 'security/pin/forgot/1000001855/645095',
     workSite: 'worksite/participants',
-    login: 'security/login'
+    login: 'security/login',
+    dashboardEpoch: 'BulkDataSync/getExportTiming/',
+    bulkDataSync: 'BulkDataSync',
+    wealthStrategyList: 'wealth/wealthStrategy/getWealthStrategyListNew',
+    activityLogList: 'activityLog/LogList',
+    clientBadgeCount: 'client/badgeCount',
+    modelportfolio: 'configuration/modelportfolio',
+    familyMemberSave: 'familyMember/save',
+    investRecommendedList: '/AddLogic/schemesAmountPercentage',
+
 };
 
 export const apiTypes = {
@@ -43,7 +59,7 @@ export var apiUrlType = '';
 
 export var apiResStatus = {
     SUCCESS: 'success',
-    FAIL: 'fail' 
+    FAIL: 'fail'
 };
 
 export var apiErrorType = {

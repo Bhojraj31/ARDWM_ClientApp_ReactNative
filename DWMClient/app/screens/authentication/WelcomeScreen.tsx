@@ -1,10 +1,14 @@
 import { StyleSheet, Text, Image, View } from 'react-native';
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { background, deepskyblue, lightwhite } from '../../assets/constants/ColorConstants';
 import CustomBtn from '../../components/CustomBtn';
+import { useTheme } from '../../theme/ThemeProvider';
 
 const WelcomeScreen: React.FC = () => {
+  
+  // ------ Used Theme Here ------
+  const { theme } = useTheme();
+  const { label, button, background } = theme.colors;
   const navigation = useNavigation<NavigationProp<HomeStackParamsList>>();
 
   const requestOTP = () => {
@@ -33,7 +37,7 @@ const WelcomeScreen: React.FC = () => {
         }}>
         <Text
           style={{
-            color: lightwhite,
+            color: label,
             fontSize: 25,
           }}>
           Grow Your Wealth
@@ -65,7 +69,7 @@ const WelcomeScreen: React.FC = () => {
 
         {/* Custom Btn here  */}
         <CustomBtn
-          textColor={deepskyblue}
+          textColor= {button}
           btnLabel="Let's See How"
           Press={requestOTP}
         />
@@ -91,7 +95,7 @@ const WelcomeScreen: React.FC = () => {
         {/* Custom Btn here */}
         <View style={{ alignItems: 'center', marginTop: 'auto' }}>
           <CustomBtn
-            textColor={deepskyblue}
+            textColor={button}
             btnLabel='Login'
             Press={requestOTP}
           />
