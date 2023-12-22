@@ -40,7 +40,7 @@ const CustomDrawerHeader: React.FC<CustomDrawerHeaderProps> = ({
                 <TouchableOpacity onPress={openDrawer}>
                     <IconButton icon="menu" size={25} iconColor={button} />
                 </TouchableOpacity>
-                <Text style={{ color: label, fontWeight: 'bold', fontSize: 19 }}>{title}</Text>
+                <Text style={{ color: label, fontWeight: '400', fontSize: 19 }}>{title}</Text>
             </View>
 
             <View style={styles.rightDrawer}>

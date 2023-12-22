@@ -93,7 +93,7 @@ const Portfolio = () => {
           backgroundColor: background,
           borderWidth: 1,
           borderColor: text,
-          marginTop: 10,
+          marginTop: 15,
           borderRadius: 5,
         }}>
         <SectionList

@@ -21,6 +21,8 @@ import Dashboard from '../../screens/dashboardFlow/BottomNavScreen/Dashboard';
 import Messages from '../../screens/dashboardFlow/BottomNavScreen/Messages';
 import { useTheme } from '../../theme/ThemeProvider';
 import CustomDrawerHeader from '../../components/CustomDrawerHeader';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 
 const Bottom = createBottomTabNavigator();
@@ -32,6 +34,7 @@ const BottomNav = () => {
   // ------ Used ActiveColor and InactiveColor Here ------
   const ActiveColor = activeTabTintColor;
   const InactiveColor = InactiveTintColor;
+  const accessWealthStrategyData = useSelector((state: RootState) => state.wealthstrategyData.responseObject);
   // ------ Return react native component here ------
   return (
     // ------ Bottom Tab navigation here ------
@@ -55,7 +58,7 @@ const BottomNav = () => {
         component={Strategy}
         options={({ navigation }) => ({
           header: () => (
-            <CustomDrawerHeader navigation={navigation} showRefresh={false}  title="Bhojraj Wealth Strategy" />
+            <CustomDrawerHeader navigation={navigation} showRefresh={false} title={accessWealthStrategyData.wealthStrategyName} />
           ),
           tabBarLabel: 'Strategy',
           tabBarIcon: ({ focused, color }) => (
@@ -68,7 +71,7 @@ const BottomNav = () => {
         component={Dashboard}
         options={({ navigation }) => ({
           header: () => (
-            <CustomDrawerHeader navigation={navigation} title="Bhojraj Wealth Strategy" />
+            <CustomDrawerHeader navigation={navigation} title={accessWealthStrategyData.wealthStrategyName} />
           ),
           tabBarLabel: 'Dashboard',
           tabBarIcon: ({ focused, color }) => (
@@ -81,7 +84,7 @@ const BottomNav = () => {
         component={Messages}
         options={({ navigation }) => ({
           header: () => (
-            <CustomDrawerHeader navigation={navigation} showRefresh={false} showFamilyButton={false} title="Bhojraj Wealth Strategy" />
+            <CustomDrawerHeader navigation={navigation} showRefresh={false} showFamilyButton={false} title={accessWealthStrategyData.wealthStrategyName} />
           ),
           tabBarLabel: 'Messages',
           tabBarIcon: ({ focused, color }) => (
@@ -90,8 +93,6 @@ const BottomNav = () => {
         })}
       />
     </Bottom.Navigator>
-
-
   )
 }
 

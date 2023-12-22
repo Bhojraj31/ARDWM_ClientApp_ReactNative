@@ -34,20 +34,36 @@ const Dashboard = () => {
   const { background } = theme.colors;
   const toast = useToast();
 
-  const [applicationDataRequest,] = useApplicationMutation();
-  // const accessApplicationData = useSelector((state: RootState) => state.applicationData.responseListObject);
-  const [ContactRequest] = useContactMutation();
-  // const accessContactData = useSelector((state: RootState) => state.contactData.responseObject);
-  const [videoListRequest] = useVideoListMutation();
-  // const accessVideoListData = useSelector((state: RootState) => state.videoListData.responseListObject);
   const [wealthStrategyRequest] = useWealthStrategyMutation();
-  // const accessWealthStrategyData = useSelector((state: RootState) => state.wealthstrategyData.responseObject);
+  const [applicationDataRequest,] = useApplicationMutation();
+  const [ContactRequest] = useContactMutation();
+  const [videoListRequest] = useVideoListMutation();
   const [notificationsSyncRequest] = useNotificationsSyncMutation();
-  // const accessNotificationsSyncData = useSelector((state: RootState) => state.notificationsSyncData.responseListObject);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
+      // wealthstrategy API
+      try {
+        apiType.value = apiTypes.post;
+        const wealthstrategyResponse = await wealthStrategyRequest({
+          entityDataList: [{
+            entityName: 'wealthstrategy',
+            lastSyncDateTime: '',
+            requestDataList: [],
+          }],
+          partyId: '1436504'
+        }).unwrap();
+
+        console.log('wealthstrategy response', wealthstrategyResponse);
+        // Dispatch the action to update the store with the wealthstrategy response data
+        const wealthstrategyData = wealthstrategyResponse.responseObject.entityDataList[0].responseData.responseObject;
+        dispatch(setWealthstrategyData(wealthstrategyData));
+      } catch (wealthstrategyError) {
+        // Handle errors for the wealthstrategy API
+        console.error('Error in wealthstrategy API:', wealthstrategyError);
+      }
+
       // apication API
       try {
         apiType.value = apiTypes.post;
@@ -119,27 +135,6 @@ const Dashboard = () => {
       } catch (videoListError) {
         // Handle errors for the VideoList API
         console.error('Error in VideoList API:', videoListError);
-      }
-
-      // wealthstrategy API
-      try {
-        apiType.value = apiTypes.post;
-        const wealthstrategyResponse = await wealthStrategyRequest({
-          entityDataList: [{
-            entityName: 'wealthstrategy',
-            lastSyncDateTime: '',
-            requestDataList: [],
-          }],
-          partyId: '1436504'
-        }).unwrap();
-
-        console.log('wealthstrategy response', wealthstrategyResponse);
-        // Dispatch the action to update the store with the wealthstrategy response data
-        const wealthstrategyData = wealthstrategyResponse.responseObject.entityDataList[0].responseData.responseObject;
-        dispatch(setWealthstrategyData(wealthstrategyData));
-      } catch (wealthstrategyError) {
-        // Handle errors for the wealthstrategy API
-        console.error('Error in wealthstrategy API:', wealthstrategyError);
       }
 
       // notificationsSync API
